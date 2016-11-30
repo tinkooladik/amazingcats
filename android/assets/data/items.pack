@@ -1,0 +1,152 @@
+
+items.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+menu
+  rotate: false
+  xy: 1, 837
+  size: 600, 180
+  orig: 600, 180
+  offset: 0, 0
+  index: -1
+newBS
+  rotate: false
+  xy: 603, 817
+  size: 400, 200
+  orig: 400, 200
+  offset: 0, 0
+  index: -1
+replay
+  rotate: false
+  xy: 1, 655
+  size: 600, 180
+  orig: 600, 180
+  offset: 0, 0
+  index: -1
+dialog_btn
+  rotate: false
+  xy: 1005, 1001
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+pauseBg
+  rotate: false
+  xy: 1005, 983
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+transp_btn
+  rotate: false
+  xy: 1005, 965
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+dailyBonBg
+  rotate: false
+  xy: 1005, 958
+  size: 5, 5
+  orig: 5, 5
+  offset: 0, 0
+  index: -1
+touch
+  rotate: false
+  xy: 1, 141
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+dialog_back
+  rotate: false
+  xy: 1, 15
+  size: 124, 124
+  orig: 124, 124
+  offset: 0, 0
+  index: -1
+fish
+  rotate: false
+  xy: 127, 19
+  size: 200, 120
+  orig: 200, 120
+  offset: 0, 0
+  index: -1
+p5
+  rotate: false
+  xy: 329, 39
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+dialog_btnPassive
+  rotate: false
+  xy: 329, 5
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+lostLife
+  rotate: false
+  xy: 363, 5
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+pause_back
+  rotate: false
+  xy: 397, 5
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+pause
+  rotate: false
+  xy: 431, 39
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+audio
+  rotate: false
+  xy: 515, 203
+  size: 250, 450
+  orig: 250, 450
+  offset: 0, 0
+  index: -1
+dialog_bg
+  rotate: false
+  xy: 767, 559
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+life
+  rotate: false
+  xy: 533, 1
+  size: 200, 200
+  orig: 200, 200
+  offset: 0, 0
+  index: -1
+leaderboard
+  rotate: false
+  xy: 603, 665
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+off
+  rotate: false
+  xy: 735, 51
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+settings
+  rotate: false
+  xy: 767, 407
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1

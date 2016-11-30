@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "823731613823",
+    "firebase_url": "https://api-project-823731613823.firebaseio.com",
+    "project_id": "api-project-823731613823",
+    "storage_bucket": "api-project-823731613823.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823731613823:android:ed5082ea0b6e40f4",
+        "android_client_info": {
+          "package_name": "com.tinkooladik.acidcat.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823731613823-f462pc795i05bonb702i76cn6qi2th8f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tinkooladik.acidcat.android",
+            "certificate_hash": "D86ACB2CC34D24ECE1EB8F438091802D6FE13571"
+          }
+        },
+        {
+          "client_id": "823731613823-vvdari03odn7tgklrtsmtnmrr40psulc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgC0yB7UBpwPeiJZ8r0MK-D0X_PFnZMnk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823731613823-vvdari03odn7tgklrtsmtnmrr40psulc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

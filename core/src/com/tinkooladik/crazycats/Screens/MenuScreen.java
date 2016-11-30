@@ -1,0 +1,257 @@
+package com.tinkooladik.crazycats.Screens;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.tinkooladik.crazycats.AcidCat;
+import com.tinkooladik.crazycats.Actors.TextureActor;
+import com.tinkooladik.crazycats.Assets;
+import com.tinkooladik.crazycats.Settings;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+
+public class MenuScreen extends ScreenAdapter {
+//    private TextureActor gameButton;
+//    private TextureActor recordButton, settButton, achieveButton;
+	AcidCat game;
+    private Texture background, bgText, bgText1, bgText2, bgText3;
+    private Stage stage;
+    private SpriteBatch bgBatch, settBatch, bonusBatch;
+    private int text = 2, del = 0;
+    private Rectangle playButton;//, menuCat;
+    private TextureActor settBtn, audio, music, sound, vibro, musicOff,
+    					leaderboard;
+    private float width, height;
+    private Group settings;
+    private boolean settShown = false;
+    public boolean getBonus = false;
+    public String today;
+
+    public MenuScreen(AcidCat game) {
+    	
+    	this.game = game;
+    	//Settings.load();
+
+		// save current date to compare and give bonuses
+		DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		today = df.format(Calendar.getInstance().getTime());
+		
+		if (!Settings.lastBonusDay.equals(today))	{
+			Settings.lastBonusDay = new String(today);
+			getBonus = true;
+		}
+		//if (Settings.lastBonusDay == today)	getBonus = true;
+		
+		// stage staff    	
+    	width = Gdx.graphics.getWidth(); height = Gdx.graphics.getHeight();
+    	
+        background = new Texture("data/gameOver bg.jpg");
+        bgText1 = new Texture("data/menuTxt_1.png");
+        bgText2 = new Texture("data/menuTxt_2.png");
+        bgText3 = new Texture("data/menuTxt_3.png");
+        bgText = bgText1;
+        bgBatch = new SpriteBatch();
+        
+        settBatch = new SpriteBatch();
+        bonusBatch = new SpriteBatch();
+    	
+        stage = new Stage(new StretchViewport(width, height)); 
+        
+        playButton = new Rectangle(width - width/2, height - width/4, width/2, width/4);
+
+        leaderboard = new TextureActor(Assets.leaderboard);
+        leaderboard.setSize(width/6, width/6);
+        leaderboard.setPosition(width - leaderboard.getWidth(), height - leaderboard.getHeight() * 1.5f);
+        leaderboard.addListener(new ClickListener() {
+			@Override
+	        public void clicked(InputEvent event, float x, float y) {
+				AcidCat.googleServices.gameHelperOnStart();
+				AcidCat.googleServices.showScores();
+			}});
+        stage.addActor(leaderboard);
+        
+        settBtn = new TextureActor(Assets.settings);
+        settBtn.setSize(width/6, width/6);
+        settBtn.setPosition(width - settBtn.getWidth(), height - settBtn.getHeight() * 2.5f);
+        settBtn.addListener(new ClickListener() {
+			@Override
+	        public void clicked(InputEvent event, float x, float y) {
+				if (!settShown) showSettings();
+				else { settings.remove(); settShown = false; }
+			}});
+        stage.addActor(settBtn);
+        
+		// UNCOMMENT when create new packs
+       // menuCat = new Rectangle(Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/6, 100, Gdx.graphics.getWidth()/6, Gdx.graphics.getWidth()/6);
+        settings = new Group();
+    	audio = new TextureActor(Assets.audio); 
+    	musicOff = new TextureActor(Assets.musicOff);
+    	music = new TextureActor(Assets.transp_btn); music.setSize(width/8, width/10);
+    	sound = new TextureActor(Assets.transp_btn); sound.setSize(width/8, width/10);
+    	vibro = new TextureActor(Assets.transp_btn); vibro.setSize(width/8, width/10);
+    	
+    	//audio.setSize(settBtn.getWidth() * 1.25f, settBtn.getHeight() * 3.75f);
+    	musicOff.setSize(width/8, width/8);
+
+    	float distance = settBtn.getWidth() * 0.1f;
+    	
+    	audio.setSize(sound.getWidth() + distance * 4f, sound.getHeight() * 3f + distance * 4f);
+    	audio.setPosition(settBtn.getX() - audio.getWidth() - distance * 2f, settBtn.getY() - audio.getHeight()/2 + settBtn.getHeight()/2);
+    	settings.addActor(audio); 
+
+    	music.setPosition(audio.getX() + distance, audio.getTop() - music.getHeight() - distance * 2); settings.addActor(music);
+    	sound.setPosition(audio.getX() + distance, audio.getTop() - sound.getHeight() * 2f - distance * 2f); settings.addActor(sound);
+    	vibro.setPosition(sound.getX(), audio.getTop() - sound.getHeight() * 3f - distance * 2f); settings.addActor(vibro);
+    	
+    	music.addListener(new ClickListener() {
+			@Override
+	        public void clicked(InputEvent event, float x, float y) {
+				Settings.musicEnabled = !Settings.musicEnabled;
+				if (Settings.musicEnabled)
+					Assets.musicPlay.play();
+				else
+					Assets.musicPlay.pause();
+			}});
+    	sound.addListener(new ClickListener() {
+			@Override
+	        public void clicked(InputEvent event, float x, float y) {
+				Settings.soundEnabled = !Settings.soundEnabled;
+			}});
+    	vibro.addListener(new ClickListener() {
+			@Override
+	        public void clicked(InputEvent event, float x, float y) {
+				Settings.vibroEnabled = !Settings.vibroEnabled;
+			}});
+    	
+	    //AcidCat.myRequestHandler.showAds(false); 
+    }
+
+    // screen rendering
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // clear screen
+        
+        if (del == 5) {
+        	switch(text) {
+        	case 1:
+        		bgText = bgText1;
+        		break;
+        	case 2:
+        		bgText = bgText2;
+        		break;
+        	case 3:
+        		bgText = bgText3;
+        		break;
+        	}
+        	del = 0;
+        }
+        
+        del++;
+        if (text<3) { text++; }
+        else { text =1; }
+        
+        bgBatch.begin();
+        bgBatch.draw(background, 0, 0, width, height);
+        bgBatch.draw(bgText, 0, 0, width, height);
+        
+		// UNCOMMENT when create new packs
+        //bgBatch.draw(Assets.menuCat, Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/6, Gdx.graphics.getHeight()-Gdx.graphics.getWidth()/6-100, Gdx.graphics.getWidth()/6, Gdx.graphics.getWidth()/6);
+        bgBatch.end();
+        
+        stage.draw();
+        
+        settBatch.begin();
+        if(!Settings.musicEnabled && settShown) settBatch.draw(Assets.musicOff, music.getX(), music.getY(), music.getWidth(), music.getHeight());
+		if(!Settings.soundEnabled && settShown) settBatch.draw(Assets.musicOff, sound.getX(), sound.getY(), sound.getWidth(), sound.getHeight());
+		if(!Settings.vibroEnabled && settShown) settBatch.draw(Assets.musicOff, vibro.getX(), vibro.getY(), sound.getWidth(), sound.getHeight());
+		settBatch.end();
+		
+		if (getBonus) {
+			bonusBatch.begin();
+			bonusBatch.draw(new Texture("data/dailyBonBg.png"), 0, 0, width, height);
+			bonusBatch.draw(new Texture("data/bonusImg.png"), 20, (height - (width + 60))/2, width - 40, width + 60);
+			bonusBatch.end();
+		}
+
+        if (Gdx.input.justTouched()) {
+        	if (getBonus) {
+        		Settings.scores[3] += 50;
+        		Settings.lastBonusDay = today;
+        		Settings.save();
+        		getBonus = false;
+        	}
+        	else
+        	if(playButton.contains(Gdx.input.getX(), Gdx.input.getY())) {
+        		game.setScreen(new GameScreen(game));
+        		dispose();
+        		return;
+        	}
+			// UNCOMMENT when create new packs
+        /*
+        	if(menuCat.contains(Gdx.input.getX(), Gdx.input.getY())) {
+        		game.setScreen(new ChooseCats(game));
+        		return;
+        	}
+        	*/
+        }
+    }
+
+    
+    private void showSettings() {
+    	
+    	stage.addActor(settings);
+    	settShown = true;
+    }
+    
+    @Override
+    public void resize(int width, int height) {}
+    
+    @Override
+    public void show() {
+		InputProcessor backProcessor = new InputAdapter() {
+        	@Override
+        	public boolean keyDown(int keycode) {
+        		
+        		if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK)) {
+            		Gdx.app.exit();
+        		}
+        		return false;
+        	}
+        };
+        
+        InputMultiplexer multiplexer = new InputMultiplexer(stage, backProcessor);
+        Gdx.input.setInputProcessor(multiplexer);
+        
+        Gdx.input.setCatchBackKey(true);
+    }
+    
+    @Override
+    public void hide() {}
+    @Override
+    public void pause() {
+    	Settings.save();
+    }
+    @Override
+    public void resume() {}
+    @Override
+    public void dispose() {
+    	background.dispose(); bgText.dispose(); bgText1.dispose(); bgText2.dispose(); bgText3.dispose();
+    	stage.dispose();
+    }
+}
