@@ -1,7 +1,6 @@
 package com.tinkooladik.crazycats;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.tinkooladik.crazycats.Screens.MenuScreen;
 import com.tinkooladik.crazycats.Tasks.Task;
 import com.tinkooladik.crazycats.Tasks.TaskFactory;
@@ -15,21 +14,18 @@ public class AcidCat extends Game {
 	public int lives;
 	public static int score, fishScore;
 	public static IGoogleServices googleServices;
-    public boolean p5 = false, musicOn;
+    public boolean p5 = false;
 	public  static int interstitialCount = 0;
 
     public AcidCat(IGoogleServices googleServices) {
     	super();
     	AcidCat.googleServices = googleServices;
     }
-
-	SpriteBatch batch;
 	
 	@Override
 	public void create () {
 		catsAmnt = 5;
 		score = 0; fishScore = 0; lives = 3;
-		batch = new SpriteBatch();
 		
 		Settings.load();
 		Assets.load();

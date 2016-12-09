@@ -5,11 +5,12 @@ import com.tinkooladik.crazycats.Settings;
 
 /**
  * Created by Oladik on 09.11.2016.
+ *
  */
 
-public class TaskScoreTotal extends Task {
+class TaskScoreTotal extends Task {
 
-	public TaskScoreTotal(int target) {
+	TaskScoreTotal(int target) {
 		this.target = target;
 		description = ("Score a total of " + target + " points");
 	}

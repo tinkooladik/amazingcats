@@ -1,22 +1,20 @@
 package com.tinkooladik.crazycats.Actors;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import java.util.Random;
+
 public class Cat extends Actor {
     private TextureRegion toDraw;
-    Random rand;
-    int pace;
-    int steps, paceX, paceY, direction;
+    private int pace;
+    private int steps, paceX, paceY;
 
     public Cat(TextureRegion toDraw, int pace) {
         this.toDraw = toDraw;
         this.pace = pace;
-   //     this.catCase = catCase;
         setSize(Gdx.graphics.getWidth()/5, Gdx.graphics.getWidth()/5);
         setPosition(100, 100);
         steps = pace;
@@ -30,7 +28,7 @@ public class Cat extends Actor {
     
     @Override
     public void act(float delta) {
-        rand = new Random();
+        Random rand = new Random();
         if (pace == steps) {
         	paceX = rand.nextInt(4); paceY = rand.nextInt(6);
             if (rand.nextBoolean()) paceX = -paceX; 

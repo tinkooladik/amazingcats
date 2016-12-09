@@ -9,7 +9,6 @@ public class Settings {
 	public static int[] scores = new int[] {0, 0, 0, 0};
 	public static boolean newMaxScore = false;
 	public static boolean musicEnabled = true;
-	public static boolean isMusicPlaing = false;
 	public static boolean soundEnabled = true;
 	public static boolean vibroEnabled = true;
 	public static boolean aliveBought = false;
@@ -18,7 +17,7 @@ public class Settings {
 	public static int taskProgress = 0;
 	public static int gamesPlayed = 0;
 	
-	public static void load () {
+	static void load () {
 		try {
 			FileHandle filehandle = Gdx.files.local(file);
 			
@@ -62,6 +61,7 @@ public class Settings {
 			filehandle.writeString(Integer.toString(gamesPlayed)+"\n", true);
 						
 		} catch (Throwable e) {
+			e.printStackTrace();
 		}
 	}
 

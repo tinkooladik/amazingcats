@@ -5,11 +5,12 @@ import com.tinkooladik.crazycats.Settings;
 
 /**
  * Created by Oladik on 09.11.2016.
+ *
  */
 
-public class TaskFishesTotal extends Task {
+class TaskFishesTotal extends Task {
 
-	public TaskFishesTotal(int target) {
+	TaskFishesTotal(int target) {
 		this.target = target;
 		description = ("Collect a total of \n     " + target + " fishes");
 	}

@@ -11,7 +11,7 @@ import com.tinkooladik.crazycats.Settings;
 
 public class Fish extends Actor {
 	
-	AcidCat game;
+	private AcidCat game;
 	
     public Fish(AcidCat game, float x, float y) {
     	this.game = game;
@@ -28,13 +28,13 @@ public class Fish extends Actor {
     }
     
 
-	public class EnterFishListener extends InputListener {
+	private class EnterFishListener extends InputListener {
 		@Override
 		public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
     		if(pointer == 0) {
 			remove();
-			game.score+=5;
-			game.fishScore++;
+			AcidCat.score+=5;
+			AcidCat.fishScore++;
 			Settings.scores[3]++;
 			// REWRITE using events
 			game.p5 = true;

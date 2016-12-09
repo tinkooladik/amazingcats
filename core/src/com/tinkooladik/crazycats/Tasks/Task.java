@@ -2,6 +2,7 @@ package com.tinkooladik.crazycats.Tasks;
 
 /**
  * Created by Oladik on 09.11.2016.
+ *
  */
 
 public abstract class Task {

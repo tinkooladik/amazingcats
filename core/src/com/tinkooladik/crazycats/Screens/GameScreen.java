@@ -27,7 +27,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.tinkooladik.crazycats.AcidCat;
 import com.tinkooladik.crazycats.Actors.Cat;
 import com.tinkooladik.crazycats.Actors.Fish;
-import com.tinkooladik.crazycats.Actors.Plus5;
+import com.tinkooladik.crazycats.Actors.Plus;
 import com.tinkooladik.crazycats.Actors.TextureActor;
 import com.tinkooladik.crazycats.Assets;
 import com.tinkooladik.crazycats.Settings;
@@ -35,27 +35,24 @@ import com.tinkooladik.crazycats.Settings;
 import java.util.Random;
 
 
-public class GameScreen extends ScreenAdapter {
-    AcidCat game;
+class GameScreen extends ScreenAdapter {
+    private AcidCat game;
 	private Stage stage;
     private int del, fishAdd, catAddLeft, catAddRight, lifeAddLeft, lifeAddRight, 
     				borderTimer, untchTimer;
     private SpriteBatch renBatch, dialogBatch;
-	Random rand = new Random();
+	private Random rand = new Random();
 	private Cat cat;
-	private Fish fish;
-	private int amount;
 	private Texture background;
 	private TextureActor pause, dialog_back, dialog_bg, dialog_btn, dialog_btnTransp, 
 							lifeLost, borderWarning, help, pauseBg, untchActor;
 	private boolean dialogExist = false, redScreen = false, borderWarningShowed = false; 
-	Group dialog;
-	BitmapFont bitmapFont;
-	public static boolean catsCreated = false, helpShowed = false;
+	private Group dialog;
+	private static boolean catsCreated = false; //, helpShowed = false;
 	private int width, height;
-	BitmapFont font, smallFont, bigFont;
-	GlyphLayout scoreLayout, dialogLayout;
-	int bg = 1, bgDel = 0, bgFormat = 0;
+	private BitmapFont font, smallFont, bigFont;
+	private GlyphLayout scoreLayout, dialogLayout;
+	private int bg = 1, bgDel = 0;
 	private float lastX, lastY;
 	private Rectangle untchBounds;
 	
@@ -63,9 +60,9 @@ public class GameScreen extends ScreenAdapter {
     	READY, RUNNING, UNTOUCHED, PAUSE, DIALOG, GAMEOVER
     }
     
-    State state = State.READY;
+    private State state = State.READY;
 
-    public GameScreen(AcidCat game) {
+    GameScreen(AcidCat game) {
     	this.game = game;
     	
     	width = Gdx.graphics.getWidth(); height = Gdx.graphics.getHeight();
@@ -73,7 +70,7 @@ public class GameScreen extends ScreenAdapter {
         stage = new Stage(new StretchViewport(width, height));
    	 	del = 0;
    	 	fishAdd = 0;
-   	 	catAddLeft = 150; catAddRight = 300; 
+   	 	catAddLeft = 150; catAddRight = 300;
    	 	lifeAddLeft = 200; lifeAddRight = 400; 
    	 	borderTimer = 0; untchTimer = 0;
         
@@ -97,9 +94,7 @@ public class GameScreen extends ScreenAdapter {
         
         scoreLayout = new GlyphLayout();
         dialogLayout = new GlyphLayout();
-        
 
-        
         background = new Texture("data/background.jpg");
         
         help = new TextureActor(Assets.help);
@@ -166,7 +161,7 @@ public class GameScreen extends ScreenAdapter {
         	break;
         case RUNNING:
         	if (game.lives > 0 && borderTimer <= 50 && untchTimer <= 100) {
-        		update(delta);
+        		update();
         	}
         	else {
         		state = State.GAMEOVER;
@@ -197,7 +192,7 @@ public class GameScreen extends ScreenAdapter {
         draw();
     }
     
-    private void update(float delta) { 
+    private void update() {
     	del++; 
     	if (del == 25) {
     		AcidCat.score++;
@@ -219,12 +214,16 @@ public class GameScreen extends ScreenAdapter {
     		}
     	}
     	else bg = 1;
-		
-    	// ADDITIONAL CATS
+
+		// ADD LIFE
 		if (AcidCat.score > lifeAddLeft && AcidCat.score < lifeAddRight && game.lives < 3) {
 			game.lives++; lifeAddLeft += 200; lifeAddRight +=200;
+			Plus pLifeActor = new Plus('l');
+			stage.addActor(pLifeActor);
 		}
-		
+
+		// ADDITIONAL CATS
+
     	if (AcidCat.score > catAddLeft && AcidCat.score < catAddRight && ++game.catsAmnt<=13) {
         	cat = new Cat(Assets.getCat(game.catsAmnt), rand.nextInt(70)+20);
         	cat.setPosition(0, height-width/4);
@@ -256,17 +255,17 @@ public class GameScreen extends ScreenAdapter {
     	}
     	else { 
     		/* add timer actor */ 
-    		float untchWidth = untchActor.getWidth();
-    		untchActor.setPosition(lastX - untchWidth/2, height - lastY - untchWidth/2);
+    		float untchSize = untchActor.getWidth();
+    		untchActor.setPosition(lastX - untchSize/2, height - lastY - untchSize/2);
     		stage.addActor(untchActor);
-    		untchBounds = new Rectangle(untchActor.getX(), height - untchActor.getTop(), untchWidth, untchWidth);
+    		untchBounds = new Rectangle(untchActor.getX(), height - untchActor.getTop(), untchSize, untchSize);
     		state = State.UNTOUCHED; 
     	}
     	
     	// PLUS 5 FOR FISH
     	if (game.p5) {
     		game.p5 = false;
-    		Plus5 p5actor = new Plus5(game);
+    		Plus p5actor = new Plus('s');
     		stage.addActor(p5actor);
     	}
     	
@@ -277,9 +276,9 @@ public class GameScreen extends ScreenAdapter {
     private void draw() {
     	renBatch.begin();
     	renBatch.draw(background, 0, 0, width, height);
-    	if (game.lives >= 1) { renBatch.draw(Assets.life, 5, height-5-width/15, width/15, width/15); };
-    	if (game.lives >= 2) { renBatch.draw(Assets.life, 5+width/15, height-5-width/15, width/15, width/15); };
-    	if (game.lives == 3) { renBatch.draw(Assets.life, 5+(width/15)*2, height-5-width/15, width/15, width/15); };
+    	if (game.lives >= 1) { renBatch.draw(Assets.life, 5, height-5-width/15, width/15, width/15); }
+    	if (game.lives >= 2) { renBatch.draw(Assets.life, 5+width/15, height-5-width/15, width/15, width/15); }
+    	if (game.lives == 3) { renBatch.draw(Assets.life, 5+(width/15)*2, height-5-width/15, width/15, width/15); }
     	// score
         scoreLayout.setText(font, String.valueOf(AcidCat.score));
     	float x = (width-scoreLayout.width)/2; float y = height - scoreLayout.height * 0.5f;
@@ -318,8 +317,7 @@ public class GameScreen extends ScreenAdapter {
     }
     
     private void createCats() {
-    	amount = game.catsAmnt;
-        for(int i = 1; i<=amount; i++) {
+        for(int i = 1; i<=game.catsAmnt; i++) {
         	cat = new Cat(Assets.getCat(i), rand.nextInt(70)+20);
         	cat.setPosition(rand.nextInt(width-width/4), rand.nextInt(height-width/4));
         	cat.addListener(new CatListener());
@@ -330,7 +328,7 @@ public class GameScreen extends ScreenAdapter {
     
     private void addFish() {
     	float x = rand.nextInt(width-width/5); float y = rand.nextInt(height-width/5-40);
-    	fish = new Fish(game, x, y);
+		Fish fish = new Fish(game, x, y);
     	stage.addActor(fish);
 		fish.toBack();
     }
@@ -538,14 +536,14 @@ public class GameScreen extends ScreenAdapter {
     	stage.dispose();
     }
     
-    class GOListener extends ClickListener {
+    private class GOListener extends ClickListener {
         @Override
         public void clicked(InputEvent event, float x, float y) {
         	gameOver();
         }
     }
 
-    class CatListener extends InputListener {
+    private class CatListener extends InputListener {
 		@Override
 		public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
 			if (pointer == 0) {
@@ -561,7 +559,7 @@ public class GameScreen extends ScreenAdapter {
 		}
 	}
 
-    class GoToPauseListener extends InputListener {
+    private class GoToPauseListener extends InputListener {
         @Override
         public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
         	state = State.PAUSE;

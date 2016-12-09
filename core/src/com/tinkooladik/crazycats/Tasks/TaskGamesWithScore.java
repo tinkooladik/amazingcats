@@ -5,6 +5,7 @@ import com.tinkooladik.crazycats.Settings;
 
 /**
  * Created by Oladik on 09.11.2016.
+ *
  */
 
 public class TaskGamesWithScore extends Task {

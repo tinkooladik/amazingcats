@@ -5,26 +5,33 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.tinkooladik.crazycats.AcidCat;
 import com.tinkooladik.crazycats.Assets;
 
-public class Plus5 extends Actor {
+public class Plus extends Actor {
 
+	private Texture toDraw;
 	
-	AcidCat game;
-	
-    public Plus5(AcidCat game) {
-    	this.game = game;
+    public Plus(char type) {
     	setSize(Gdx.graphics.getWidth()/9, Gdx.graphics.getWidth()/9);
-		float x = Gdx.graphics.getWidth()/2 + this.getWidth() * 0.5f;
 		float y = Gdx.graphics.getHeight() - this.getHeight();
-		setPosition(x, y);;
+		float x = 0;
+		switch (type) {
+			case 's':
+				x = Gdx.graphics.getWidth()/2 + this.getWidth() * 0.5f;
+				toDraw = Assets.plus5;
+				break;
+			case 'l':
+				x = 5 + (Gdx.graphics.getWidth() / 15) * 3;
+				toDraw = Assets.plus5; // change to plus 1
+				break;
+		}
+
+		setPosition(x, y);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(getColor());
-        Texture toDraw = Assets.plus5;
         batch.draw(toDraw, getX(), getY(), getWidth(), getHeight());
     }
 

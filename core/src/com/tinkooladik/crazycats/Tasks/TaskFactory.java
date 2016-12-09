@@ -4,6 +4,7 @@ import com.tinkooladik.crazycats.Settings;
 
 /**
  * Created by Oladik on 10.11.2016.
+ *
  */
 
 public class TaskFactory {

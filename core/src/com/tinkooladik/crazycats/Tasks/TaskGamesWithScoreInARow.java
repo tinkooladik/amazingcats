@@ -5,11 +5,12 @@ import com.tinkooladik.crazycats.Settings;
 
 /**
  * Created by Oladik on 09.11.2016.
+ *
  */
 
-public class TaskGamesWithScoreInARow extends Task {
+class TaskGamesWithScoreInARow extends Task {
 
-	public TaskGamesWithScoreInARow(int target) {
+	TaskGamesWithScoreInARow(int target) {
 		this.target = target;
 		description = ("Play 3 games in a row \n     with more then " + target + "\n     score points");
 	}

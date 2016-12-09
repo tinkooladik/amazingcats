@@ -11,16 +11,15 @@ public class Assets {
 	
 	private static TextureAtlas catsAtlas;
 	public static TextureAtlas items;
-	public static TextureRegion cat;
 	public static TextureRegion dialog_back, dialog_bg, dialog_btn, dialog_btnPassive, transp_btn;
 	public static TextureRegion fish, life, lostLife, pause, pause_back, pauseBg, help, touch;
 	public static TextureRegion musicOff, audio, settings, leaderboard;
-	public static TextureRegion replay, menu, newBestScore; 
+	public static TextureRegion replay, menu;
 	public static Texture plus5;
 	public static Music musicPlay;
 	public static Sound soundPlay;
 	
-	public static void load() {
+	static void load() {
 		loadCatsAtlas();
         items = new TextureAtlas("data/items.pack");
         
@@ -42,7 +41,6 @@ public class Assets {
         
         menu = items.findRegion("menu");
         replay = items.findRegion("replay");
-        newBestScore = items.findRegion("newBS");
 
         settings = items.findRegion("settings");
         audio = items.findRegion("audio");
@@ -60,8 +58,7 @@ public class Assets {
 	}
 	
 	public static TextureRegion getCat(int i) {
-        cat = catsAtlas.findRegion("cat"+i); 
-		return cat;
+		return catsAtlas.findRegion("cat"+i);
 	}
 	
 	public static void loadCatsAtlas() {

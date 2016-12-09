@@ -5,11 +5,12 @@ import com.tinkooladik.crazycats.Settings;
 
 /**
  * Created by Oladik on 09.11.2016.
+ *
  */
 
-public class TaskGamesWithFishes extends Task {
+class TaskGamesWithFishes extends Task {
 
-	public TaskGamesWithFishes(int target) {
+	TaskGamesWithFishes(int target) {
 		this.target = target;
 		description = "Play 3 games with more\n     then " + target + "fishes";
 	}
