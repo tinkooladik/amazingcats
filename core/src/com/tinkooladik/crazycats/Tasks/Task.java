@@ -6,7 +6,7 @@ package com.tinkooladik.crazycats.Tasks;
 
 public abstract class Task {
 	protected String description = "unknown task";
-	protected int target;
+	public int target;
 
 	public String getDescription() {
 		return description;

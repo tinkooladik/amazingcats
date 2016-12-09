@@ -14,7 +14,9 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.tinkooladik.crazycats.AcidCat;
 import com.tinkooladik.crazycats.Actors.TextureActor;
@@ -25,11 +27,14 @@ public class GameOverScreen extends ScreenAdapter {
 	private TextureActor replayButton, menuButton;
 	private Stage stage;
     private String scoreText, maxScoreText;
-    private BitmapFont font, smallFont, bigFont;
-    private SpriteBatch renBatch;
+    private BitmapFont font, smallFont, bigFont, fontBestScore;
+    private SpriteBatch renBatch, progressBarBatch;
     private Texture background;
     private int width, height;
 	GlyphLayout layout;
+	private int timerBestScore;
+	private float positionYBestScore;
+	private ProgressBar progressBar;
     
     AcidCat game;
 	 
@@ -74,6 +79,8 @@ public class GameOverScreen extends ScreenAdapter {
 		stage.addActor(menuButton);
 		
 		maxScoreText = scoreText = "Huy";
+
+		timerBestScore = 0;
 		
 		font = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
         font.setColor(Color.WHITE);
@@ -86,11 +93,16 @@ public class GameOverScreen extends ScreenAdapter {
 
 		bigFont = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
 		bigFont.setColor(Color.WHITE);
-		bigFont.getData().setScale(5f*x, 5f*y);
+		bigFont.getData().setScale(7f*x, 7f*y);
+
+		fontBestScore = new BitmapFont(Gdx.files.internal("data/font.fnt"), false);
+		fontBestScore.setColor(Color.WHITE);
+		bigFont.getData().setScale(3f*x, 3f*y);
 
         layout = new GlyphLayout();
         
         renBatch = new SpriteBatch();
+		progressBarBatch = new SpriteBatch();
 
         background = new Texture("data/gameOver bg.jpg");
 
@@ -124,7 +136,12 @@ public class GameOverScreen extends ScreenAdapter {
 		}
 
 		// Progress bar
-
+		ProgressBar.ProgressBarStyle pbs = new ProgressBar.ProgressBarStyle(new TextureRegionDrawable(Assets.pause_back),
+																			new TextureRegionDrawable(Assets.pauseBg));
+		progressBar = new ProgressBar(0, AcidCat.task.target, 1, false, pbs);
+		progressBar.setValue(Settings.taskProgress);
+		progressBar.setSize(width - 100, 100);
+		progressBar.setX(50);
     }
 	
 	@Override
@@ -157,13 +174,23 @@ public class GameOverScreen extends ScreenAdapter {
 	private void draw() { 
     	renBatch.begin();
     	renBatch.draw(background, 0, 0, width, height);
-    	
-        layout.setText(bigFont, scoreText);
-		float x = (width - layout.width)/2; float y = height / 2 + layout.height;
-		bigFont.draw(renBatch, layout, x, y);
+
+		if(!Settings.newMaxScore) {
+			drawScore();
+		} else
+		{
+			if (timerBestScore < 55) {
+				drawScore();
+				timerBestScore++;
+			} else if (timerBestScore < 100) {
+				drawBestScore();
+				timerBestScore++;
+			} else timerBestScore = 0;
+		}
+
 
     	layout.setText(smallFont, maxScoreText);
-		x = 20; y = layout.height * 7;
+		float x = 20;  float y = layout.height * 8;
 		smallFont.draw(renBatch, layout, x, y);
 
 		layout.setText(font, Settings.taskNum + 1 + ". " + AcidCat.task.getDescription());
@@ -172,6 +199,12 @@ public class GameOverScreen extends ScreenAdapter {
 
     	//if (Settings.newMaxScore) renBatch.draw(Assets.newBestScore, (width-width/2)/2, replayButton.getTop()+100, width/2, width/6);
     	renBatch.end();
+
+		progressBarBatch.begin();
+		progressBar.setY(height - layout.height * 2 - 100);
+		progressBar.draw(progressBarBatch, 1);
+		progressBarBatch.end();
+
 		stage.draw();
 	}
 	
@@ -179,6 +212,19 @@ public class GameOverScreen extends ScreenAdapter {
 		stage.act(delta);
 		scoreText = "" + Settings.scores[0];
 		maxScoreText = "Best: " + Settings.scores[1];
+	}
+
+	private void drawScore() {
+		layout.setText(bigFont, scoreText);
+		float x = (width - layout.width)/2; float y = height / 2 + layout.height * 2f;
+		positionYBestScore = y - layout.height / 2;
+		bigFont.draw(renBatch, layout, x, y);
+	}
+
+	private void drawBestScore(){
+		layout.setText(fontBestScore, "NEW BEST SCORE!");
+		float x = (width - layout.width)/2;
+		fontBestScore.draw(renBatch, layout, x, positionYBestScore);
 	}
 
 	@Override
