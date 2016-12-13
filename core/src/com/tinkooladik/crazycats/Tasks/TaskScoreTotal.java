@@ -12,7 +12,7 @@ class TaskScoreTotal extends Task {
 
 	TaskScoreTotal(int target) {
 		this.target = target;
-		description = ("Score a total of " + target + " points");
+		description = ("Score a total of " + target + " \npoints");
 	}
 
 	public void update() {

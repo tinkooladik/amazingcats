@@ -22,7 +22,7 @@ public class Plus extends Actor {
 				break;
 			case 'l':
 				x = 5 + (Gdx.graphics.getWidth() / 15) * 3;
-				toDraw = Assets.plus5; // change to plus 1
+				toDraw = Assets.plusLife; // change to plus 1
 				break;
 		}
 

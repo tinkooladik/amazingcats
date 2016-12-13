@@ -48,7 +48,7 @@ class GameScreen extends ScreenAdapter {
 							lifeLost, borderWarning, help, pauseBg, untchActor;
 	private boolean dialogExist = false, redScreen = false, borderWarningShowed = false; 
 	private Group dialog;
-	private static boolean catsCreated = false; //, helpShowed = false;
+	private static boolean catsCreated = false, helpShowed = false;
 	private int width, height;
 	private BitmapFont font, smallFont, bigFont;
 	private GlyphLayout scoreLayout, dialogLayout;
@@ -146,7 +146,7 @@ class GameScreen extends ScreenAdapter {
         case READY:
         	if(!catsCreated) { stage.clear(); 
         						createCats(); catsCreated = true; 
-        						//if(!helpShowed) { stage.addActor(help); helpShowed = true; }
+        						if(!helpShowed) { stage.addActor(help); helpShowed = true; }
         				    	dialogExist = false;
         				    	stage.addActor(pause); 
         				    	Settings.addScore(AcidCat.score, AcidCat.fishScore); Settings.save();

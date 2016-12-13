@@ -12,7 +12,7 @@ class TaskGamesWithFishes extends Task {
 
 	TaskGamesWithFishes(int target) {
 		this.target = target;
-		description = "Play 3 games with more\n     then " + target + "fishes";
+		description = "Play 3 games with more\n     then " + target + " fishes";
 	}
 
 	public void update() {

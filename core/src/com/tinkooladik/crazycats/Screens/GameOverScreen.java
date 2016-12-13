@@ -26,7 +26,7 @@ import com.tinkooladik.crazycats.Settings;
 public class GameOverScreen extends ScreenAdapter {
 	private TextureActor replayButton, menuButton;
 	private Stage stage;
-    private String scoreText, maxScoreText;
+    private String scoreText, maxScoreText, taskCompleted;
     private BitmapFont font, smallFont, bigFont, fontBestScore;
     private SpriteBatch renBatch, progressBarBatch;
     private Texture background;
@@ -114,8 +114,9 @@ public class GameOverScreen extends ScreenAdapter {
 			AcidCat.task = AcidCat.taskFactory.getNewTask();
 
 			AcidCat.googleServices.showToast("Task " + Settings.taskNum + " completed!");
+			taskCompleted = "Task " + Settings.taskNum + " completed!";
 		}
-		else AcidCat.googleServices.showToast(AcidCat.task.getDescription() + " " + Settings.taskProgress);
+		else taskCompleted = "";
 
 	    // ads
 
@@ -136,12 +137,15 @@ public class GameOverScreen extends ScreenAdapter {
 		}
 
 		// Progress bar
-		ProgressBar.ProgressBarStyle pbs = new ProgressBar.ProgressBarStyle(new TextureRegionDrawable(Assets.pause_back),
-																			new TextureRegionDrawable(Assets.pauseBg));
+		ProgressBar.ProgressBarStyle pbs = new ProgressBar.ProgressBarStyle(new TextureRegionDrawable(Assets.progressBar),
+																			new TextureRegionDrawable(Assets.knob));
+		pbs.knobBefore = pbs.knob;
+		//pbs.knobBefore = new TextureRegionDrawable(Assets.progressBarTop);
 		progressBar = new ProgressBar(0, AcidCat.task.target, 1, false, pbs);
 		progressBar.setValue(Settings.taskProgress);
 		progressBar.setSize(width - 100, 100);
 		progressBar.setX(50);
+		progressBar.setAnimateDuration(2);
     }
 	
 	@Override
@@ -190,7 +194,7 @@ public class GameOverScreen extends ScreenAdapter {
 
 
     	layout.setText(smallFont, maxScoreText);
-		float x = 20;  float y = layout.height * 8;
+		float x = 20;  float y = layout.height * 10;
 		smallFont.draw(renBatch, layout, x, y);
 
 		layout.setText(font, Settings.taskNum + 1 + ". " + AcidCat.task.getDescription());
@@ -203,6 +207,17 @@ public class GameOverScreen extends ScreenAdapter {
 		progressBarBatch.begin();
 		progressBar.setY(height - layout.height * 2 - 100);
 		progressBar.draw(progressBarBatch, 1);
+
+		layout.setText(smallFont, String.valueOf(Settings.taskProgress));
+		x = (width - layout.width) / 2;
+		y = progressBar.getY() + (progressBar.getHeight() - layout.height) / 2 + layout.height;
+		smallFont.draw(progressBarBatch, layout, x, y);
+
+		layout.setText(font, taskCompleted);
+		x = (width - layout.width) / 2;
+		y = progressBar.getY() - layout.height * 2f;
+		font.draw(progressBarBatch, layout, x, y);
+
 		progressBarBatch.end();
 
 		stage.draw();

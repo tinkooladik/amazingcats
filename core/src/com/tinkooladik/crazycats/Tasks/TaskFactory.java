@@ -39,6 +39,13 @@ public class TaskFactory {
 				break;
 			case 8:
 				task = new TaskGamesWithFishesInARow(2);
+				break;
+			case 9:
+				task = new TaskGamesWithScore(120);
+				break;
+			default:
+				task = new TaskEmpty();
+				break;
 		}
 		return task;
 	}

@@ -15,7 +15,8 @@ public class Assets {
 	public static TextureRegion fish, life, lostLife, pause, pause_back, pauseBg, help, touch;
 	public static TextureRegion musicOff, audio, settings, leaderboard;
 	public static TextureRegion replay, menu;
-	public static Texture plus5;
+	public static TextureRegion progressBar, knob;
+	public static Texture plus5, plusLife;
 	public static Music musicPlay;
 	public static Sound soundPlay;
 	
@@ -34,6 +35,7 @@ public class Assets {
         lostLife = items.findRegion("lostLife");
         touch = items.findRegion("touch");
         plus5 = new Texture("data/p5.png");
+		plusLife = new Texture("data/pLife.png");
         
         pause = items.findRegion("pause");
         pause_back = items.findRegion("pause_back");
@@ -55,6 +57,9 @@ public class Assets {
 		if(Settings.musicEnabled) musicPlay.play();
 		
 		soundPlay = Gdx.audio.newSound(Gdx.files.internal("data/sound.mp3"));
+
+		progressBar = new TextureRegion(new Texture("data/pb.png"));
+		knob = new TextureRegion(new Texture("data/knob.png"));
 	}
 	
 	public static TextureRegion getCat(int i) {

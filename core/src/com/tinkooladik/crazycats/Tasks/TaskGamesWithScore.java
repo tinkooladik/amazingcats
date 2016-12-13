@@ -12,7 +12,7 @@ public class TaskGamesWithScore extends Task {
 
 	public TaskGamesWithScore(int target) {
 		this.target = target;
-		description = ("Play a total of 3 games with more then " + target + " score points");
+		description = ("Play a total of 3 games\n with more then " + target + " \nscore points");
 	}
 
 	public void update() {
@@ -21,7 +21,7 @@ public class TaskGamesWithScore extends Task {
 
 	@Override
 	public boolean isCompleted() {
-		return Settings.taskProgress >= target;
+		return Settings.taskProgress >= 3;
 	}
 
 }

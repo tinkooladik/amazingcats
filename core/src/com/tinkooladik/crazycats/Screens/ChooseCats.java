@@ -68,7 +68,7 @@ public class ChooseCats extends ScreenAdapter {
 				Settings.catsPack = 1;
             	Settings.save();
         		Assets.loadCatsAtlas();
-        		GameScreen.catsCreated = false;
+        		//////////////////GameScreen.catsCreated = false;
 			}
 		});
 
@@ -170,7 +170,7 @@ public class ChooseCats extends ScreenAdapter {
         		Settings.catsPack = 0;
             	Settings.save();
         		Assets.loadCatsAtlas();
-        		GameScreen.catsCreated = false;
+        		////////////////////////GameScreen.catsCreated = false;
         	}
         	
     /*    	if(aliveCats.contains(Gdx.input.getX(), Gdx.input.getY())) {
