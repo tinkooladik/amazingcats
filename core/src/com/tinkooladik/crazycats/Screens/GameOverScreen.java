@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -62,8 +63,8 @@ public class GameOverScreen extends ScreenAdapter {
 		
 		width = Gdx.graphics.getWidth(); height = Gdx.graphics.getHeight();
 		
-		replayButton = new TextureActor(Assets.replay);
-		menuButton = new TextureActor(Assets.menu);
+		replayButton = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrReplay, Texture.class)));
+		menuButton = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrMenu, Texture.class)));
 
 		replayButton.setSize(width/3, width/9);
 		menuButton.setSize(width/3, width/9);
@@ -113,7 +114,7 @@ public class GameOverScreen extends ScreenAdapter {
 			Settings.taskProgress = 0;
 			AcidCat.task = AcidCat.taskFactory.getNewTask();
 
-			AcidCat.googleServices.showToast("Task " + Settings.taskNum + " completed!");
+			//AcidCat.googleServices.showToast("Task " + Settings.taskNum + " completed!");
 			taskCompleted = "Task " + Settings.taskNum + " completed!";
 		}
 		else taskCompleted = "";
@@ -137,8 +138,10 @@ public class GameOverScreen extends ScreenAdapter {
 		}
 
 		// Progress bar
-		ProgressBar.ProgressBarStyle pbs = new ProgressBar.ProgressBarStyle(new TextureRegionDrawable(Assets.progressBar),
-																			new TextureRegionDrawable(Assets.knob));
+		ProgressBar.ProgressBarStyle pbs = new ProgressBar.ProgressBarStyle(new TextureRegionDrawable(new TextureRegion(
+				AcidCat.manager.get(Assets.txrProgressBar, Texture.class))),
+																			new TextureRegionDrawable(new TextureRegion(
+																					AcidCat.manager.get(Assets.txrKnob, Texture.class))));
 		pbs.knobBefore = pbs.knob;
 		//pbs.knobBefore = new TextureRegionDrawable(Assets.progressBarTop);
 		progressBar = new ProgressBar(0, AcidCat.task.target, 1, false, pbs);

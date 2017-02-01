@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,9 +19,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.tinkooladik.crazycats.AcidCat;
+import com.tinkooladik.crazycats.Actors.TextureActor;
 import com.tinkooladik.crazycats.Assets;
 import com.tinkooladik.crazycats.Settings;
-import com.tinkooladik.crazycats.Actors.TextureActor;
 
 public class ChooseCats extends ScreenAdapter {
 	AcidCat game;
@@ -59,7 +60,8 @@ public class ChooseCats extends ScreenAdapter {
 		bought = new Label("bought", settStyle);
 		bought.setPosition(width-width/5-50-bought.getWidth(), height/4*3-360+60);
 
-		chooseAlive = new TextureActor(Assets.transp_btn);
+		chooseAlive = new TextureActor(new TextureRegion(
+				AcidCat.manager.get(Assets.txrTranspBtn, Texture.class)));
 		chooseAlive.setSize(width-60, 200);
 		chooseAlive.setPosition(30, height/4*3-360);
 		chooseAlive.addListener(new ClickListener() {
@@ -67,7 +69,7 @@ public class ChooseCats extends ScreenAdapter {
 	        public void clicked(InputEvent event, float x, float y) {
 				Settings.catsPack = 1;
             	Settings.save();
-        		Assets.loadCatsAtlas();
+        		//////Assets.loadCatsAtlas();
         		//////////////////GameScreen.catsCreated = false;
 			}
 		});
@@ -78,11 +80,12 @@ public class ChooseCats extends ScreenAdapter {
 		alivePrice = new Label("250", settStyle);
 		alivePrice.setPosition(width-width/5-50-alivePrice.getWidth(), height/4*3-360+60);
 
-		cantBuy = new TextureActor(Assets.dialog_btnPassive);
+		cantBuy = new TextureActor(new TextureRegion(
+				AcidCat.manager.get(Assets.txrDialogBtnPassive, Texture.class)));
 		cantBuy.setSize(width-60, 200);
 		cantBuy.setPosition(30, height/4*3-360);
 
-		buyAlive = new TextureActor(Assets.transp_btn);
+		buyAlive = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrTranspBtn, Texture.class)));
 		buyAlive.setSize(width-60, 200);
 		buyAlive.setPosition(30, height/4*3-360);
 		buyAlive.addListener(new ClickListener() {
@@ -140,21 +143,24 @@ public class ChooseCats extends ScreenAdapter {
 		if(!Settings.aliveBought && Settings.scores[3]<250)
 				stage.addActor(cantBuy);
 		
-		if(Settings.aliveBought) 
+		if(Settings.aliveBought)
     		stage.addActor(bought);
 		
 		sBatch.begin();
 		sBatch.draw(background, 0, 0, width, height);
 		// buttons background
-		sBatch.draw(Assets.pause_back, 15, 20, width-30, height-20-15);
-		sBatch.draw(Assets.pause_back, 30, height/4*3-140, width-60, 200);
-		sBatch.draw(Assets.pause_back, 30, height/4*3-360, width-60, 200);
+		sBatch.draw(
+				AcidCat.manager.get(Assets.txrPauseBack, Texture.class), 15, 20, width-30, height-20-15);
+		sBatch.draw(AcidCat.manager.get(Assets.txrPauseBack, Texture.class), 30, height/4*3-140, width-60, 200);
+		sBatch.draw(AcidCat.manager.get(Assets.txrPauseBack, Texture.class), 30, height/4*3-360, width-60, 200);
 		
 		// show what pack is used
-		if(Settings.catsPack == 0) 
-			sBatch.draw(Assets.dialog_btn, 30, height/4*3-140, width-60, 200);
+		if(Settings.catsPack == 0)
+			sBatch.draw(
+					AcidCat.manager.get(Assets.txrPauseBack, Texture.class), 30, height/4*3-140, width-60, 200);
 		if(Settings.catsPack == 1)
-			sBatch.draw(Assets.dialog_btn, 30, height/4*3-360, width-60, 200);
+			sBatch.draw(
+					AcidCat.manager.get(Assets.txrPauseBack, Texture.class), 30, height/4*3-360, width-60, 200);
 		
 		// pictures on packs 
 		//sBatch.draw(Assets.acidCat, 50, height/4*3-140+50, 100, 100);
@@ -169,7 +175,7 @@ public class ChooseCats extends ScreenAdapter {
         	if(acidCats.contains(Gdx.input.getX(), Gdx.input.	getY())) {
         		Settings.catsPack = 0;
             	Settings.save();
-        		Assets.loadCatsAtlas();
+        		////////////Assets.loadCatsAtlas();
         		////////////////////////GameScreen.catsCreated = false;
         	}
         	

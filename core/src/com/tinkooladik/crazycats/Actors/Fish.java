@@ -1,6 +1,7 @@
 package com.tinkooladik.crazycats.Actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,8 +24,7 @@ public class Fish extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.setColor(getColor());
-        //batch.draw(Assets.fish1, getX(), getY(), getWidth(), getHeight());
-        batch.draw(Assets.fish, getX(), getY(), getWidth(), getHeight());
+        batch.draw(AcidCat.manager.get(Assets.txrFish, Texture.class), getX(), getY(), getWidth(), getHeight());
     }
     
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,11 +20,9 @@ import com.tinkooladik.crazycats.AcidCat;
 import com.tinkooladik.crazycats.Actors.TextureActor;
 import com.tinkooladik.crazycats.Assets;
 import com.tinkooladik.crazycats.Settings;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 
 public class MenuScreen extends ScreenAdapter {
 //    private TextureActor gameButton;
@@ -74,7 +73,8 @@ public class MenuScreen extends ScreenAdapter {
         
         playButton = new Rectangle(width - width/2, height - width/4, width/2, width/4);
 
-        leaderboard = new TextureActor(Assets.leaderboard);
+        leaderboard = new TextureActor(new TextureRegion(
+						AcidCat.manager.get(Assets.txrLeaderboard, Texture.class)));
         leaderboard.setSize(width/6, width/6);
         leaderboard.setPosition(width - leaderboard.getWidth(), height - leaderboard.getHeight() * 1.5f);
         leaderboard.addListener(new ClickListener() {
@@ -85,7 +85,7 @@ public class MenuScreen extends ScreenAdapter {
 			}});
         stage.addActor(leaderboard);
         
-        settBtn = new TextureActor(Assets.settings);
+        settBtn = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrSettings, Texture.class)));
         settBtn.setSize(width/6, width/6);
         settBtn.setPosition(width - settBtn.getWidth(), height - settBtn.getHeight() * 2.5f);
         settBtn.addListener(new ClickListener() {
@@ -99,11 +99,11 @@ public class MenuScreen extends ScreenAdapter {
 		// UNCOMMENT when create new packs
        // menuCat = new Rectangle(Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/6, 100, Gdx.graphics.getWidth()/6, Gdx.graphics.getWidth()/6);
         settings = new Group();
-    	audio = new TextureActor(Assets.audio); 
-    	musicOff = new TextureActor(Assets.musicOff);
-    	music = new TextureActor(Assets.transp_btn); music.setSize(width/8, width/10);
-    	sound = new TextureActor(Assets.transp_btn); sound.setSize(width/8, width/10);
-    	vibro = new TextureActor(Assets.transp_btn); vibro.setSize(width/8, width/10);
+    	audio = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrAudio, Texture.class)));
+    	musicOff = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrMusicOff, Texture.class)));
+    	music = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrTranspBtn, Texture.class))); music.setSize(width/8, width/10);
+    	sound = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrTranspBtn, Texture.class))); sound.setSize(width/8, width/10);
+    	vibro = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrTranspBtn, Texture.class))); vibro.setSize(width/8, width/10);
     	
     	//audio.setSize(settBtn.getWidth() * 1.25f, settBtn.getHeight() * 3.75f);
     	musicOff.setSize(width/8, width/8);
@@ -123,9 +123,9 @@ public class MenuScreen extends ScreenAdapter {
 	        public void clicked(InputEvent event, float x, float y) {
 				Settings.musicEnabled = !Settings.musicEnabled;
 				if (Settings.musicEnabled)
-					Assets.musicPlay.play();
+					Assets.music.play();
 				else
-					Assets.musicPlay.pause();
+					Assets.music.pause();
 			}});
     	sound.addListener(new ClickListener() {
 			@Override
@@ -177,9 +177,12 @@ public class MenuScreen extends ScreenAdapter {
         stage.draw();
         
         settBatch.begin();
-        if(!Settings.musicEnabled && settShown) settBatch.draw(Assets.musicOff, music.getX(), music.getY(), music.getWidth(), music.getHeight());
-		if(!Settings.soundEnabled && settShown) settBatch.draw(Assets.musicOff, sound.getX(), sound.getY(), sound.getWidth(), sound.getHeight());
-		if(!Settings.vibroEnabled && settShown) settBatch.draw(Assets.musicOff, vibro.getX(), vibro.getY(), sound.getWidth(), sound.getHeight());
+        if(!Settings.musicEnabled && settShown) settBatch.draw(new TextureRegion(
+						AcidCat.manager.get(Assets.txrMusicOff, Texture.class)), music.getX(), music.getY(), music.getWidth(), music.getHeight());
+		if(!Settings.soundEnabled && settShown) settBatch.draw(new TextureRegion(
+				AcidCat.manager.get(Assets.txrMusicOff, Texture.class)), sound.getX(), sound.getY(), sound.getWidth(), sound.getHeight());
+		if(!Settings.vibroEnabled && settShown) settBatch.draw(new TextureRegion(
+				AcidCat.manager.get(Assets.txrMusicOff, Texture.class)), vibro.getX(), vibro.getY(), sound.getWidth(), sound.getHeight());
 		settBatch.end();
 		
 		if (getBonus) {

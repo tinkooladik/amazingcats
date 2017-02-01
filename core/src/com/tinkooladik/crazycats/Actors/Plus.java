@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tinkooladik.crazycats.AcidCat;
 import com.tinkooladik.crazycats.Assets;
 
 public class Plus extends Actor {
@@ -18,11 +19,11 @@ public class Plus extends Actor {
 		switch (type) {
 			case 's':
 				x = Gdx.graphics.getWidth()/2 + this.getWidth() * 0.5f;
-				toDraw = Assets.plus5;
+				toDraw = AcidCat.manager.get(Assets.txrPlus5);
 				break;
 			case 'l':
 				x = 5 + (Gdx.graphics.getWidth() / 15) * 3;
-				toDraw = Assets.plusLife; // change to plus 1
+				toDraw = AcidCat.manager.get(Assets.txrPlusLife); // change to plus 1
 				break;
 		}
 
