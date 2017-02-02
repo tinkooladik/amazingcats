@@ -67,6 +67,10 @@ public class DesktopGoogleServices implements IGoogleServices {
 
 	}
 
+	@Override public boolean isRewarded() {
+		return false;
+	}
+
 	@Override
 	public boolean isNetworkAvailable() {
 		return false;

@@ -140,7 +140,8 @@ class GameScreen extends ScreenAdapter {
       if (game.catsAmnt>5) state = State.READY;
         
 	    //AcidCat.myRequestHandler.showAds(false);
-               
+
+			AcidCat.rewardedAfter--;
     }
 
 
@@ -185,7 +186,7 @@ class GameScreen extends ScreenAdapter {
         	else state = State.GAMEOVER;
         	break;
         case PAUSE:
-        	// do nothing 
+        	// do nothing
         	break;
         case DIALOG:
         	if (!dialogExist) showDialog();
@@ -457,6 +458,12 @@ class GameScreen extends ScreenAdapter {
 		}
 		
 		stage.addActor(dialog);
+
+		if(AcidCat.rewardedAfter == 0) {
+			AcidCat.rewardedAfter = 10;
+			AcidCat.googleServices.showRewarded();
+		}
+
 		dialogExist = true;
 	}
 	

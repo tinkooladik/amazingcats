@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	  <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
      
     <application
         xmlns:ads="http://schemas.android.com/apk/res-auto"
@@ -48,7 +50,14 @@
     	
     	<meta-data android:name="com.google.android.gms.games.APP_ID" 
     	    android:value="@string/app_id" />
-		
+
+      <activity android:name="com.adcolony.sdk.AdColonyInterstitialActivity"
+          android:configChanges="keyboardHidden|orientation|screenSize"
+          android:hardwareAccelerated="true"/>
+
+      <activity android:name="com.adcolony.sdk.AdColonyAdViewActivity"
+          android:configChanges="keyboardHidden|orientation|screenSize"
+          android:hardwareAccelerated="true"/>
 	    
     </application>
 

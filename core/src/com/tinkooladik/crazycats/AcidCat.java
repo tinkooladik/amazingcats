@@ -18,6 +18,7 @@ public class AcidCat extends Game {
   public boolean p5 = false;
   public static int interstitialCount = 0;
   public static AssetManager manager;
+  public static int rewardedAfter = 10;
 
   public AcidCat(IGoogleServices googleServices) {
     super();

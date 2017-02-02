@@ -10,7 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
+import com.adcolony.sdk.AdColony;
+import com.adcolony.sdk.AdColonyAdOptions;
+import com.adcolony.sdk.AdColonyInterstitial;
+import com.adcolony.sdk.AdColonyInterstitialListener;
+import com.adcolony.sdk.AdColonyReward;
+import com.adcolony.sdk.AdColonyRewardListener;
+import com.adcolony.sdk.AdColonyZone;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.google.android.gms.ads.AdListener;
@@ -19,14 +25,10 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.reward.RewardItem;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
-import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
 import com.tinkooladik.crazycats.AcidCat;
-
 import gpservices.IGoogleServices;
 
 public class AndroidLauncher extends AndroidApplication implements IGoogleServices {
@@ -35,8 +37,14 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 	private InterstitialAd interstitialAd; //**//
 	private GameHelper _gameHelper;
 
-	private RewardedVideoAd mAd;
-	private static final String REWARDED_UNIT_ID = "ca-app-pub-6529396180091306/6793284470";
+  final private String APP_ID = "app380212d7180a48959f";
+  final private String ZONE_ID = "vz33fbc6e0305546b985";
+
+  private AdColonyInterstitial rewardedAd;
+  private AdColonyInterstitialListener adColonyListener;
+  private AdColonyAdOptions ad_options;
+
+  private boolean rewardedSuccess = false;
 
 	private AdView bannerAd;
 	private static final String BANNER_AD_UNIT_ID = "ca-app-pub-6529396180091306/6714389279";
@@ -87,6 +95,7 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 
 
 		// BANNER
+
 		MobileAds.initialize(getApplicationContext(), BANNER_AD_UNIT_ID);
 
 		RelativeLayout layout = new RelativeLayout(this);
@@ -102,37 +111,55 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 		setContentView(layout);
 
 		// REWARDED
-		mAd = MobileAds.getRewardedVideoAdInstance(this);
-		mAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
-			@Override public void onRewardedVideoAdLoaded() {
+		if(AdColony.configure(this, APP_ID, ZONE_ID)) showToast("configured");
+    else showToast("not configured");
 
-			}
-
-			@Override public void onRewardedVideoAdOpened() {
-
-			}
-
-			@Override public void onRewardedVideoStarted() {
-
-			}
-
-			@Override public void onRewardedVideoAdClosed() {
-
-			}
-
-			@Override public void onRewarded(RewardItem rewardItem) {
-
-			}
-
-			@Override public void onRewardedVideoAdLeftApplication() {
-
-			}
-
-			@Override public void onRewardedVideoAdFailedToLoad(int i) {
-
+		AdColony.setRewardListener(new AdColonyRewardListener() {
+			@Override public void onReward(AdColonyReward adColonyReward) {
+				if(adColonyReward.success()) {
+					// reward
+          rewardedSuccess = true;
+				}
 			}
 		});
-		loadRewardedVideoAd();
+
+    ad_options = new AdColonyAdOptions()
+        .enableConfirmationDialog( true );
+
+    adColonyListener = new AdColonyInterstitialListener()
+    {
+      /** Ad passed back in request filled callback, ad can now be shown */
+      @Override
+      public void onRequestFilled( AdColonyInterstitial ad )
+      {
+        rewardedAd = ad;
+        showToast("rewarded was loaded");
+        rewardedAd.show();
+      }
+
+      /** Ad request was not filled */
+      @Override
+      public void onRequestNotFilled( AdColonyZone zone )
+      {
+        showToast("Ad request was not filled");
+      }
+
+      /** Ad opened, reset UI to reflect state change */
+      @Override
+      public void onOpened( AdColonyInterstitial ad )
+      {
+      }
+
+      /** Request a new ad if ad is expiring */
+      @Override
+      public void onExpiring( AdColonyInterstitial ad )
+      {
+        showToast("expired");
+        AdColony.requestInterstitial( ZONE_ID, this, ad_options  );
+      }
+    };
+    AdColony.requestInterstitial(ZONE_ID, adColonyListener, ad_options );
+
 	}
 
 	@Override
@@ -291,26 +318,25 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 		});
 	}
 
-	private void loadRewardedVideoAd() {
-	mAd.loadAd(REWARDED_UNIT_ID, new AdRequest.Builder()
-			.addTestDevice("A086C24BCC40B2F05F919279DED26002")
-			.addTestDevice("68F91B8F0F6A121B1D0C30B6B44FC0F1")
-			.build());
-	}
-
 	@Override
 	public void showRewarded() {
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				if (mAd.isLoaded()) {
-					mAd.show();
-				} else {
-				//	Toast.makeText(getApplicationContext(), "Rewarded is not loaded", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
+    if (rewardedAd != null) {
+      runOnUiThread(new Runnable() {
+        @Override public void run() {
+          rewardedAd.show();
+        }
+      });
+    }
+    else {
+      showToast("rewarded is null");
+    }
+
 	}
+
+  @Override
+  public boolean isRewarded() {
+    return rewardedSuccess;
+  }
 
 	@Override
 	public boolean isNetworkAvailable() {
@@ -333,6 +359,7 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 	public void gameHelperOnStart() {
 		_gameHelper.onStart(this);
 	}
+
 
 }
 
