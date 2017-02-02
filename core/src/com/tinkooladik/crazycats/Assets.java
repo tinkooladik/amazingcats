@@ -10,24 +10,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Assets {
 
   public static String txrPlus5, txrPlusLife, txrDialogBack, txrDialogBg, txrDialogBtn, txrDialogBtnPassive,
-                txrTranspBtn, txrFish, txrLife, txrLostLife, txrPause, txrPauseBack, txrPauseBg,
-                txrHelp, txrTouch, txrMusicOff, txrAudio, txrSettings, txrLeaderboard, txrReplay,
-                txrMenu, txrProgressBar, txrKnob;
+                txrTranspBtn, txrFish, txrLife, txrLostLife, txrPause, txrPauseBack, txrPauseBg, txrHelp,
+                txrTouch, txrMusicOff, txrAudio, txrSettings, txrLeaderboard, txrAchievements, txrRate,
+                txrReplay, txrMenu, txrProgressBar, txrKnob, txrGameOver, menuTxt1, menuTxt2, menuTxt3,
+                bonusImg, bonusBg, gameBg;
   public static Music music;
   public static Sound sound;
 
   public static TextureAtlas atlas;
-/*
-    private static TextureAtlas catsAtlas;
-    public static TextureAtlas items;
-    public static TextureRegion dialog_back, dialog_bg, dialog_btn, dialog_btnPassive, transp_btn;
-    public static TextureRegion fish, life, lostLife, pause, pause_back, pauseBg, help, touch;
-    public static TextureRegion musicOff, audio, settings, leaderboard;
-    public static TextureRegion replay, menu;
-    public static TextureRegion progressBar, knob;
-    public static Texture plus5, plusLife;*/
-   // public static Music musicPlay;
-   // public static Sound soundPlay;
 
   static void load() {
 
@@ -81,6 +71,12 @@ public class Assets {
     txrLeaderboard = "data/leaderboard.png";
     AcidCat.manager.load(txrLeaderboard, Texture.class);
 
+    txrAchievements = "data/achievements.png";
+    AcidCat.manager.load(txrAchievements, Texture.class);
+
+    txrRate = "data/rate.png";
+    AcidCat.manager.load(txrRate, Texture.class);
+
     txrReplay = "data/replay.png";
     AcidCat.manager.load(txrReplay, Texture.class);
 
@@ -92,6 +88,32 @@ public class Assets {
 
     txrKnob = "data/knob.png";
     AcidCat.manager.load(txrKnob, Texture.class);
+
+    for(int i = 1; i <= 8; i++) {
+      AcidCat.manager.load("data/" + i + ".jpg", Texture.class);
+    }
+
+    gameBg = "data/background.jpg";
+    AcidCat.manager.load(gameBg, Texture.class);
+
+    // menu screen
+    txrGameOver = "data/game_over_bg.jpg";
+    AcidCat.manager.load(txrGameOver, Texture.class);
+
+    menuTxt1 = "data/menu_txt_1.png";
+    AcidCat.manager.load(menuTxt1, Texture.class);
+
+    menuTxt2 = "data/menu_txt_2.png";
+    AcidCat.manager.load(menuTxt2, Texture.class);
+
+    menuTxt3 = "data/menu_txt_3.png";
+    AcidCat.manager.load(menuTxt3, Texture.class);
+
+    bonusImg = "data/bonus_img.png";
+    AcidCat.manager.load(bonusImg, Texture.class);
+
+    bonusBg = "data/bonus_bg.png";
+    AcidCat.manager.load(bonusBg, Texture.class);
 
 
     // dialog textures
@@ -115,7 +137,11 @@ public class Assets {
       AcidCat.manager.load("data/alive/cat" + i + ".png", Texture.class);
     }
 
+    AcidCat.manager.finishLoading();
 
+  }
+
+  public static void loadMusic() {
     // music
     music = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
     music.setLooping(true);
@@ -123,80 +149,10 @@ public class Assets {
     if (Settings.musicEnabled) music.play();
 
     sound = Gdx.audio.newSound(Gdx.files.internal("data/sound.mp3"));
-
-    AcidCat.manager.finishLoading();
-
   }
 
   public static TextureRegion getCat(int i) {
     return new TextureRegion(AcidCat.manager.get("data/alive/cat" + i + ".png", Texture.class));
   }
 
-/*
-    static void initialize() {
-
-        Gdx.app.log("myLogs", "start of manager loading");
-
-        loadCatsAtlas();
-        items = new TextureAtlas("data/items.pack");
-
-        dialog_back = items.findRegion("dialog_back");
-        dialog_bg = items.findRegion("dialog_bg");
-        dialog_btn = items.findRegion("dialog_btn");
-        dialog_btnPassive = items.findRegion("dialog_btnPassive");
-        transp_btn = items.findRegion("transp_btn");
-
-        fish = items.findRegion("fish");
-        life = items.findRegion("life");
-        lostLife = items.findRegion("lostLife");
-        touch = items.findRegion("touch");
-        //plus5 = new Texture("data/p5.png");
-        //plus5 = AcidCat.manager.get("data/p5.png", Texture.class);
-        //plusLife = new Texture("data/pLife.png");
-        //plusLife = AcidCat.manager.get("data/pLife.png", Texture.class);
-
-        pause = items.findRegion("pause");
-        pause_back = items.findRegion("pause_back");
-        pauseBg = items.findRegion("pauseBg");
-
-        menu = items.findRegion("menu");
-        replay = items.findRegion("replay");;
-
-        settings = items.findRegion("settings");
-        audio = items.findRegion("audio");
-        musicOff = items.findRegion("off");
-        leaderboard = items.findRegion("leaderboard");
-
-        help = new TextureRegion(new Texture("data/help.png"));
-
-        musicPlay = Gdx.audio.newMusic(Gdx.files.internal("data/music.mp3"));
-        musicPlay.setLooping(true);
-        musicPlay.setVolume(1.0f);
-        if (Settings.musicEnabled) musicPlay.play();
-
-        soundPlay = Gdx.audio.newSound(Gdx.files.internal("data/sound.mp3"));
-
-        progressBar = new TextureRegion(new Texture("data/pb.png"));
-        knob = new TextureRegion(new Texture("data/knob.png"));
-
-        Gdx.app.log("myLogs", "end of manager loading");
-    }
-*/
-    /*public static TextureRegion getCat(int i) {
-        return catsAtlas.findRegion("cat" + i);
-    }*/
-/*
-    public static void loadCatsAtlas() {
-        /*
-         * switch(Settings.catsPack) {
-		case 0: 
-	        catsAtlas = new TextureAtlas("data/cats.pack");
-	        break;
-		case 1:
-	        catsAtlas = new TextureAtlas("data/cats_alive.pack");
-	        break;
-		}
-        catsAtlas = new TextureAtlas("data/aliveCats.pack");
-    }
-*/
 }

@@ -41,7 +41,37 @@ public class TaskFactory {
 				task = new TaskGamesWithFishesInARow(2);
 				break;
 			case 9:
-				task = new TaskGamesWithScore(120);
+				task = new TaskGamesWithScore(100);
+				break;
+			case 10:
+				task = new TaskFishes(10);
+				break;
+			case 11:
+				task = new TaskBeatBestScore(1);
+				break;
+			case 12:
+				task = new TaskGames(10);
+				break;
+			case 13:
+				task = new TaskScoreTotal(350);
+				break;
+			case 14:
+				task = new TaskGamesWithScoreInARow(150);
+				break;
+			case 15:
+				task = new TaskFishesTotal(50);
+				break;
+			case 16:
+				task = new TaskGamesWithFishesInARow(15);
+				break;
+			case 17:
+				task = new TaskGamesWithScore(300);
+				break;
+			case 18:
+				task = new TaskBeatBestScore(3);
+				break;
+			case 19:
+				task = new TaskGames(20);
 				break;
 			default:
 				task = new TaskEmpty();

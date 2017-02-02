@@ -23,26 +23,27 @@ import com.tinkooladik.crazycats.AcidCat;
 import com.tinkooladik.crazycats.Actors.TextureActor;
 import com.tinkooladik.crazycats.Assets;
 import com.tinkooladik.crazycats.Settings;
+import gpservices.Achievements;
 
 public class GameOverScreen extends ScreenAdapter {
 	private TextureActor replayButton, menuButton;
 	private Stage stage;
-    private String scoreText, maxScoreText, taskCompleted;
-    private BitmapFont font, smallFont, bigFont, fontBestScore;
-    private SpriteBatch renBatch, progressBarBatch;
-    private Texture background;
-    private int width, height;
+  private String scoreText, maxScoreText, taskCompleted;
+  private BitmapFont font, smallFont, bigFont, fontBestScore;
+  private SpriteBatch renBatch, progressBarBatch;
+  private Texture background;
+  private int width, height;
 	GlyphLayout layout;
 	private int timerBestScore;
 	private float positionYBestScore;
 	private ProgressBar progressBar;
-    
-    AcidCat game;
+
+  AcidCat game;
 	 
 	public class GoToRestartListener extends ClickListener {
 	        @Override
 	        public void clicked(InputEvent event, float x, float y) {
-				AcidCat.googleServices.hideBannerAd();
+						AcidCat.googleServices.hideBannerAd();
 	        	game.setScreen(new GameScreen(game));
 	        }
 	    }
@@ -50,7 +51,7 @@ public class GameOverScreen extends ScreenAdapter {
 	public class GoToMenuListener extends ClickListener {
 	        @Override
 	        public void clicked(InputEvent event, float x, float y) {
-				AcidCat.googleServices.hideBannerAd();
+						AcidCat.googleServices.hideBannerAd();
 	        	game.setScreen(new MenuScreen(game));
 				/////////////////AcidCat.googleServices.showRewarded();
 	        }
@@ -84,7 +85,7 @@ public class GameOverScreen extends ScreenAdapter {
 		timerBestScore = 0;
 		
 		font = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
-        font.setColor(Color.WHITE);
+    font.setColor(Color.WHITE);
 		float x = width / 720f; float y = height / 1280f;
 		font.getData().setScale(0.9f * x, 0.9f * y);
 
@@ -100,16 +101,17 @@ public class GameOverScreen extends ScreenAdapter {
 		fontBestScore.setColor(Color.WHITE);
 		bigFont.getData().setScale(3f*x, 3f*y);
 
-        layout = new GlyphLayout();
+		layout = new GlyphLayout();
         
-        renBatch = new SpriteBatch();
+		renBatch = new SpriteBatch();
 		progressBarBatch = new SpriteBatch();
 
-        background = new Texture("data/gameOver bg.jpg");
+		background = AcidCat.manager.get(Assets.txrGameOver, Texture.class);
 
 		// task
 
 		if (AcidCat.task.isCompleted()) {
+      Achievements.updateTasksAchievements();
 			Settings.taskNum++;
 			Settings.taskProgress = 0;
 			AcidCat.task = AcidCat.taskFactory.getNewTask();
@@ -271,7 +273,17 @@ public class GameOverScreen extends ScreenAdapter {
 
 	@Override
 	public void dispose() {
-		stage.dispose();		
+		super.dispose();
+		stage.dispose();
+
+		font.dispose();
+		fontBestScore.dispose();
+		bigFont.dispose();
+		smallFont.dispose();
+
+		renBatch.dispose();
+		progressBarBatch.dispose();
+
 	}
 
 

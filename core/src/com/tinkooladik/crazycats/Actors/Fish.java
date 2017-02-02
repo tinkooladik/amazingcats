@@ -32,12 +32,12 @@ public class Fish extends Actor {
 		@Override
 		public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
     		if(pointer == 0) {
-			remove();
-			AcidCat.score+=5;
-			AcidCat.fishScore++;
-			Settings.scores[3]++;
-			// REWRITE using events
-			game.p5 = true;
+					remove();
+					AcidCat.score+=5;
+					AcidCat.fishScore++;
+					Settings.scores[3]++;
+					// REWRITE using events
+					game.p5 = true;
     		}
 		}
     }

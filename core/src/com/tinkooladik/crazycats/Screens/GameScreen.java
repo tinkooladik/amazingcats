@@ -32,6 +32,7 @@ import com.tinkooladik.crazycats.Actors.Plus;
 import com.tinkooladik.crazycats.Actors.TextureActor;
 import com.tinkooladik.crazycats.Assets;
 import com.tinkooladik.crazycats.Settings;
+import gpservices.Achievements;
 import java.util.Random;
 
 class GameScreen extends ScreenAdapter {
@@ -66,7 +67,7 @@ class GameScreen extends ScreenAdapter {
     	
     	width = Gdx.graphics.getWidth(); height = Gdx.graphics.getHeight();
     	
-        stage = new Stage(new StretchViewport(width, height));
+			stage = new Stage(new StretchViewport(width, height));
    	 	del = 0;
    	 	fishAdd = 0;
    	 	catAddLeft = 150; catAddRight = 300;
@@ -74,69 +75,69 @@ class GameScreen extends ScreenAdapter {
    	 	borderTimer = 0; untchTimer = 0;
         
    	 	//Assets.load();
-        renBatch = new SpriteBatch();
-        dialogBatch = new SpriteBatch();
+			renBatch = new SpriteBatch();
+			dialogBatch = new SpriteBatch();
 
-        font = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
-        font.setColor(Color.BLACK);
-        //float x = 2 * (width / height); // float y = height / 1280f;
-		float x = width / 720f; float y = height / 1280f;
-        font.getData().setScale(x, y);
+			font = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
+			font.setColor(Color.BLACK);
+			//float x = 2 * (width / height); // float y = height / 1280f;
+			float x = width / 720f; float y = height / 1280f;
+			font.getData().setScale(x, y);
         
-        smallFont = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
-        smallFont.setColor(Color.DARK_GRAY);
-        smallFont.getData().setScale(0.65f*x, 0.65f*y);
+			smallFont = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
+			smallFont.setColor(Color.DARK_GRAY);
+			smallFont.getData().setScale(0.65f*x, 0.65f*y);
         
-        bigFont = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
-        bigFont.setColor(Color.WHITE);
-        bigFont.getData().setScale(1.5f*x, 1.5f*y);
+      bigFont = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
+      bigFont.setColor(Color.WHITE);
+      bigFont.getData().setScale(1.5f*x, 1.5f*y);
         
-        scoreLayout = new GlyphLayout();
-        dialogLayout = new GlyphLayout();
+      scoreLayout = new GlyphLayout();
+      dialogLayout = new GlyphLayout();
 
-        background = new Texture("data/background.jpg");
+      background = AcidCat.manager.get(Assets.gameBg, Texture.class);
         
-        help = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrHelp, Texture.class)));
-        help.setSize(width, height);
-        help.setPosition(0, 0);
-        help.addListener(new InputListener() {
+      help = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrHelp, Texture.class)));
+      help.setSize(width, height);
+      help.setPosition(0, 0);
+      help.addListener(new InputListener() {
         	@Override
     		public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor){
-        		help.remove();
+            help.remove();
         	}
-        });
+      });
         
-        lifeLost = new TextureActor(new TextureRegion(
-						AcidCat.manager.get(Assets.txrLostLife, Texture.class)));
-        lifeLost.setSize(width, height);
-        lifeLost.setPosition(0, 0);
+      lifeLost = new TextureActor(new TextureRegion(
+          AcidCat.manager.get(Assets.txrLostLife, Texture.class)));
+      lifeLost.setSize(width, height);
+      lifeLost.setPosition(0, 0);
         
-        borderWarning = new TextureActor(new TextureRegion(
-						AcidCat.manager.get(Assets.txrLostLife, Texture.class)));
-        borderWarning.setSize(width, height);
-        borderWarning.setPosition(0, 0);
+      borderWarning = new TextureActor(new TextureRegion(
+          AcidCat.manager.get(Assets.txrLostLife, Texture.class)));
+      borderWarning.setSize(width, height);
+      borderWarning.setPosition(0, 0);
         
-        dialog_back = new TextureActor(new TextureRegion(
-						AcidCat.manager.get(Assets.txrDialogBack, Texture.class)));
-        dialog_bg = new TextureActor(new TextureRegion(
-						AcidCat.manager.get(Assets.txrDialogBg, Texture.class)));
-        dialog_btn = new TextureActor(new TextureRegion(
-						AcidCat.manager.get(Assets.txrDialogBtn, Texture.class)));
-        dialog_btnTransp = new TextureActor(new TextureRegion(
-						AcidCat.manager.get(Assets.txrTranspBtn, Texture.class)));
+      dialog_back = new TextureActor(new TextureRegion(
+          AcidCat.manager.get(Assets.txrDialogBack, Texture.class)));
+      dialog_bg = new TextureActor(new TextureRegion(
+          AcidCat.manager.get(Assets.txrDialogBg, Texture.class)));
+      dialog_btn = new TextureActor(new TextureRegion(
+          AcidCat.manager.get(Assets.txrDialogBtn, Texture.class)));
+      dialog_btnTransp = new TextureActor(new TextureRegion(
+          AcidCat.manager.get(Assets.txrTranspBtn, Texture.class)));
         
-        float pauseSize = width/10;
-        pause = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrPause, Texture.class)));
-        pause.setSize(pauseSize, pauseSize);
-        pause.setPosition(width-5-pauseSize, height-5-pauseSize);
-        pause.toFront();
-        pause.addListener(new GoToPauseListener());
+      float pauseSize = width/10;
+      pause = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrPause, Texture.class)));
+      pause.setSize(pauseSize, pauseSize);
+      pause.setPosition(width-5-pauseSize, height-5-pauseSize);
+      pause.toFront();
+      pause.addListener(new GoToPauseListener());
         
-        untchActor = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrTouch, Texture.class)));
-        untchActor.setSize(pauseSize * 2f, pauseSize * 2f);
+      untchActor = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrTouch, Texture.class)));
+      untchActor.setSize(pauseSize * 2f, pauseSize * 2f);
         
         
-        if (game.catsAmnt>5) state = State.READY;
+      if (game.catsAmnt>5) state = State.READY;
         
 	    //AcidCat.myRequestHandler.showAds(false);
                
@@ -214,7 +215,7 @@ class GameScreen extends ScreenAdapter {
     		bgDel++;
     		if (bgDel == 2000) {
     			bgDel = 0;
-        		background = new Texture("data/" + bg + ".jpg");
+        		background = AcidCat.manager.get("data/" + bg + ".jpg", Texture.class);
         		bg++;
     		}
     	}
@@ -342,9 +343,10 @@ class GameScreen extends ScreenAdapter {
     
     private void gameOver() {
     	stage.clear();
-    	Settings.addScore(AcidCat.score, AcidCat.fishScore);
-		Settings.gamesPlayed++;
-		AcidCat.task.update();
+      Settings.addScore(AcidCat.score, AcidCat.fishScore);
+		  Settings.gamesPlayed++;
+		  AcidCat.task.update();
+      Achievements.updateAchievements(AcidCat.fishScore, AcidCat.score);
     	Settings.save();
     	catsCreated = false;
     	game.catsAmnt = 5;
@@ -540,12 +542,9 @@ class GameScreen extends ScreenAdapter {
     	state = State.PAUSE;
     	showPause();
     	}
+
     @Override
     public void resume() {}
-    @Override
-    public void dispose() {
-    	stage.dispose();
-    }
     
     private class GOListener extends ClickListener {
         @Override
@@ -577,5 +576,18 @@ class GameScreen extends ScreenAdapter {
         	showPause();
         }
     }
-   
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		stage.dispose();
+
+    renBatch.dispose();
+    dialogBatch.dispose();
+
+    font.dispose();
+    smallFont.dispose();
+    bigFont.dispose();
+
+	}
 }

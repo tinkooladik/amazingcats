@@ -75,5 +75,8 @@ public class Settings {
 		else newMaxScore = false;
 		scores[2] = fishScore;
 	}
-
+	// 0 - score
+	// 1 - maxScore
+	// 2 - fishScore
+	// 3 - fishesAmount
 }

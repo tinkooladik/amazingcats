@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.tinkooladik.crazycats.AcidCat;
+import com.tinkooladik.crazycats.Assets;
 
 /**
  * Created by User on 31.01.2017.
@@ -15,6 +17,7 @@ public class SplashScreen implements Screen {
   private SpriteBatch batch;
   private AcidCat game;
   private Texture texture;
+  private long endTime = 0;
 
   public SplashScreen(AcidCat game) {
     this.game = game;
@@ -34,7 +37,12 @@ public class SplashScreen implements Screen {
     batch.draw(texture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     batch.end();
 
-    if (AcidCat.manager.update()) game.setScreen(new MenuScreen(game));
+    if (AcidCat.manager.update() && endTime == 0) {
+      endTime = TimeUtils.millis();
+      Assets.loadMusic();
+    }
+
+    if (AcidCat.manager.update() && TimeUtils.timeSinceMillis(endTime) >= 2000) game.setScreen(new MenuScreen(game));
 
 
     Gdx.app.log("myLog", "Progress: " + String.valueOf(AcidCat.manager.getProgress()));

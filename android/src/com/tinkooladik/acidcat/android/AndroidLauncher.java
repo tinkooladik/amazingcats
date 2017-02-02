@@ -19,7 +19,9 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.GameHelper;
 import com.google.example.games.basegameutils.GameHelper.GameHelperListener;
@@ -101,7 +103,35 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 
 		// REWARDED
 		mAd = MobileAds.getRewardedVideoAdInstance(this);
-		//mAd.setRewardedVideoAdListener(this);
+		mAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+			@Override public void onRewardedVideoAdLoaded() {
+
+			}
+
+			@Override public void onRewardedVideoAdOpened() {
+
+			}
+
+			@Override public void onRewardedVideoStarted() {
+
+			}
+
+			@Override public void onRewardedVideoAdClosed() {
+
+			}
+
+			@Override public void onRewarded(RewardItem rewardItem) {
+
+			}
+
+			@Override public void onRewardedVideoAdLeftApplication() {
+
+			}
+
+			@Override public void onRewardedVideoAdFailedToLoad(int i) {
+
+			}
+		});
 		loadRewardedVideoAd();
 	}
 
@@ -167,27 +197,33 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 	@Override
 	public void submitScore(long score) {
 		// TODO Auto-generated method stub
-		if (isSignedIn() == true) {
+		if (isSignedIn()) {
 			Games.Leaderboards.submitScore(_gameHelper.getApiClient(), getString(R.string.leaderboard_id), score);
 			// Show the leaderboard
 			//startActivityForResult(Games.Leaderboards.getLeaderboardIntent(_gameHelper.getApiClient(), getString(R.string.leaderboard_id)), 0);
-		}
-		else
-		{
-		// Maybe sign in here then redirect to submitting score?
 		}
 	}
 
 	@Override
 	public void showScores() {
 		// TODO Auto-generated method stub
-		if (isSignedIn() == true)
+		if (isSignedIn())
 			startActivityForResult(Games.Leaderboards.getLeaderboardIntent(_gameHelper.getApiClient(), getString(R.string.leaderboard_id)), 1);
 		else
 		{
 		// Maybe sign in here then redirect to showing scores?
 			signIn();
 		}
+	}
+
+	@Override public void updateAchievements(String achievementId, int points) {
+		if (isSignedIn())
+			Games.Achievements.increment(_gameHelper.getApiClient(), achievementId, points);
+	}
+
+	@Override public void showAchievements() {
+		if (isSignedIn())
+			startActivityForResult(Games.Achievements.getAchievementsIntent(_gameHelper.getApiClient()), 1);
 	}
 
 	@Override

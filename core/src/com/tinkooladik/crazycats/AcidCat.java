@@ -30,7 +30,6 @@ public class AcidCat extends Game {
 
     manager = new AssetManager();
 
-
     catsAmnt = 5;
     score = 0;
     fishScore = 0;
@@ -41,14 +40,6 @@ public class AcidCat extends Game {
     task = taskFactory.getNewTask();
 
     setScreen(new SplashScreen(this));
-
-   // Settings.load();
-   // Assets.load();
-
-
-
-  //  setScreen(new MenuScreen(this));
-
   }
 
   public void loadAssets() {
