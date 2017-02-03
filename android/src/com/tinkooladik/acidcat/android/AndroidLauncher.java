@@ -282,8 +282,8 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 
 	private void requestNewInterstitial() {
 		AdRequest adRequest = new AdRequest.Builder()
-				.addTestDevice("A086C24BCC40B2F05F919279DED26002")
-				.addTestDevice("68F91B8F0F6A121B1D0C30B6B44FC0F1")
+				//.addTestDevice("A086C24BCC40B2F05F919279DED26002")
+				//.addTestDevice("68F91B8F0F6A121B1D0C30B6B44FC0F1")
 				.build();
 
 		interstitialAd.loadAd(adRequest);
@@ -301,12 +301,11 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 	@Override
 	public void showBannerAd() {
 		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
+			@Override public void run() {
 				bannerAd.setVisibility(View.VISIBLE);
 				AdRequest adRequest = new AdRequest.Builder()
-						.addTestDevice("A086C24BCC40B2F05F919279DED26002")
-						.addTestDevice("68F91B8F0F6A121B1D0C30B6B44FC0F1")
+						//.addTestDevice("A086C24BCC40B2F05F919279DED26002")
+						//.addTestDevice("68F91B8F0F6A121B1D0C30B6B44FC0F1")
 						.build();
 				bannerAd.loadAd(adRequest);
 			}

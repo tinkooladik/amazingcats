@@ -173,6 +173,13 @@ public class MenuScreen extends ScreenAdapter {
     });
     	
     //AcidCat.myRequestHandler.showAds(false);
+
+    if(Settings.firstRun) {
+      Settings.firstRun = false;
+      Settings.save();
+      AcidCat.googleServices.gameHelperOnStart();
+    }
+
     }
 
     // screen rendering

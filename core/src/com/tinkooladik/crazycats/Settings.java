@@ -12,6 +12,7 @@ public class Settings {
 	public static boolean soundEnabled = true;
 	public static boolean vibroEnabled = true;
 	public static boolean aliveBought = false;
+	public static boolean firstRun = true;
 	public static String lastBonusDay = "15.01.1997";
 	public static int taskNum = 0;
 	public static int taskProgress = 0;
@@ -37,6 +38,7 @@ public class Settings {
 			taskNum = Integer.parseInt(strings[9]);
 			taskProgress = Integer.parseInt(strings[10]);
 			gamesPlayed = Integer.parseInt(strings[11]);
+			firstRun = Boolean.parseBoolean(strings[12]);
 		} catch (Throwable e) {
 			// :( It's ok we have defaults
 		}
@@ -59,7 +61,7 @@ public class Settings {
 			filehandle.writeString(Integer.toString(taskNum)+"\n", true);
 			filehandle.writeString(Integer.toString(taskProgress)+"\n", true);
 			filehandle.writeString(Integer.toString(gamesPlayed)+"\n", true);
-						
+			filehandle.writeString(Boolean.toString(firstRun)+"\n", true);
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

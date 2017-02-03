@@ -95,11 +95,11 @@ public class GameOverScreen extends ScreenAdapter {
 
 		bigFont = new BitmapFont(Gdx.files.internal("data/font.fnt"),false);
 		bigFont.setColor(Color.WHITE);
-		bigFont.getData().setScale(7f*x, 7f*y);
+		bigFont.getData().setScale(4f*x, 4f*y);
 
 		fontBestScore = new BitmapFont(Gdx.files.internal("data/font.fnt"), false);
 		fontBestScore.setColor(Color.WHITE);
-		bigFont.getData().setScale(3f*x, 3f*y);
+		fontBestScore.getData().setScale(1.5f*x, 1.5f*y);
 
 		layout = new GlyphLayout();
         
@@ -148,7 +148,7 @@ public class GameOverScreen extends ScreenAdapter {
 		//pbs.knobBefore = new TextureRegionDrawable(Assets.progressBarTop);
 		progressBar = new ProgressBar(0, AcidCat.task.target, 1, false, pbs);
 		progressBar.setValue(Settings.taskProgress);
-		progressBar.setSize(width - 100, 100);
+		progressBar.setSize(width - 100, 150);
 		progressBar.setX(50);
 		progressBar.setAnimateDuration(2);
     }
@@ -174,20 +174,19 @@ public class GameOverScreen extends ScreenAdapter {
 
 	@Override
 	public void render(float delta) {
-        Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // clear screen
+		Gdx.gl.glClearColor(135/255f, 206/255f, 235/255f, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // clear screen
 		update(delta);
-        draw();
+		draw();
 	}
 	
-	private void draw() { 
-    	renBatch.begin();
-    	renBatch.draw(background, 0, 0, width, height);
+	private void draw() {
+		renBatch.begin();
+		renBatch.draw(background, 0, 0, width, height);
 
-		if(!Settings.newMaxScore) {
+		if (!Settings.newMaxScore) {
 			drawScore();
-		} else
-		{
+		} else {
 			if (timerBestScore < 55) {
 				drawScore();
 				timerBestScore++;
@@ -197,20 +196,20 @@ public class GameOverScreen extends ScreenAdapter {
 			} else timerBestScore = 0;
 		}
 
-
-    	layout.setText(smallFont, maxScoreText);
-		float x = 20;  float y = layout.height * 10;
+		layout.setText(smallFont, maxScoreText);
+		float x = 20;
+		float y = layout.height * 10;
 		smallFont.draw(renBatch, layout, x, y);
 
 		layout.setText(font, Settings.taskNum + 1 + ". " + AcidCat.task.getDescription());
 		y = height - 20;
-		font.draw(renBatch,layout, x, y);
+		font.draw(renBatch, layout, x, y);
 
-    	//if (Settings.newMaxScore) renBatch.draw(Assets.newBestScore, (width-width/2)/2, replayButton.getTop()+100, width/2, width/6);
-    	renBatch.end();
+		//if (Settings.newMaxScore) renBatch.draw(Assets.newBestScore, (width-width/2)/2, replayButton.getTop()+100, width/2, width/6);
+		renBatch.end();
 
 		progressBarBatch.begin();
-		progressBar.setY(height - layout.height * 2 - 100);
+		progressBar.setY(height - layout.height * 2 - 150);
 		progressBar.draw(progressBarBatch, 1);
 
 		layout.setText(smallFont, String.valueOf(Settings.taskProgress));

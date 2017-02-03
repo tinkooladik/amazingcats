@@ -58,6 +58,7 @@ class GameScreen extends ScreenAdapter {
 	private Rectangle untchBounds;
 	private RewardedButton rewardedBtn;
 	private int rewardedRequest = 0;
+	private boolean rewarding = false;
 	
 	private enum State {
 		READY, RUNNING, UNTOUCHED, PAUSE, DIALOG, GAMEOVER
@@ -201,20 +202,24 @@ class GameScreen extends ScreenAdapter {
 			case DIALOG:
 				if (!dialogExist) showDialog();
 
-				rewardedBtn.act(delta);
-				rewardedRequest++;
+				// if rewarded is possible
+				if(rewarding) {
+					rewardedBtn.act(delta);
+					rewardedRequest++;
 
-				// check if video finished
-				if(rewardedRequest == 50) {
-					rewardedRequest = 0;
-					if(AcidCat.googleServices.isRewarded()) {
-						AcidCat.googleServices.resetRewardedSuccess();
-						game.lives += 3;
-						untchActor.remove();
-						dialog.remove();
-						rewardedBtn.remove();
-						state = State.READY;
-						dialogExist = false;
+					// check if video finished
+					if (rewardedRequest == 50) {
+						rewardedRequest = 0;
+						if (AcidCat.googleServices.isRewarded()) {
+							AcidCat.googleServices.resetRewardedSuccess();
+							game.lives += 3;
+							untchActor.remove();
+							dialog.remove();
+							rewardedBtn.remove();
+							state = State.READY;
+							dialogExist = false;
+							rewarding = false;
+						}
 					}
 				}
 
@@ -504,6 +509,7 @@ class GameScreen extends ScreenAdapter {
 		if( AcidCat.googleServices.isRewardedReady()) {
 			//AcidCat.rewardedAfter <= 0 &&
 			// add rewarded button
+			rewarding = true;
 			rewardedBtn = new RewardedButton(game, dialog_bg.getTop());
 			stage.addActor(rewardedBtn);
 		}
