@@ -72,25 +72,11 @@ public class MenuScreen extends ScreenAdapter {
         
     playButton = new Rectangle(width - width/2, height - width/4, width/2, width/4);
 
-    // leaderboard
-    leaderboard = new TextureActor(new TextureRegion(
-						AcidCat.manager.get(Assets.txrLeaderboard, Texture.class)));
-    leaderboard.setSize(width/6, width/6);
-    leaderboard.setPosition(width - leaderboard.getWidth(), height - leaderboard.getHeight() * 2.5f);
-    leaderboard.addListener(new ClickListener() {
-			@Override
-	    public void clicked(InputEvent event, float x, float y) {
-		    AcidCat.googleServices.gameHelperOnStart();
-				AcidCat.googleServices.showScores();
-			}
-    });
-    stage.addActor(leaderboard);
-
     // achievements
     achievements = new TextureActor(new TextureRegion(
         AcidCat.manager.get(Assets.txrAchievements, Texture.class)));
     achievements.setSize(width/6, width/6);
-    achievements.setPosition(width - achievements.getWidth(), height - achievements.getHeight() * 1.5f);
+    achievements.setPosition(width - achievements.getWidth(), height - achievements.getHeight());
     achievements.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
@@ -100,11 +86,25 @@ public class MenuScreen extends ScreenAdapter {
     });
     stage.addActor(achievements);
 
+    // leaderboard
+    leaderboard = new TextureActor(new TextureRegion(
+						AcidCat.manager.get(Assets.txrLeaderboard, Texture.class)));
+    leaderboard.setSize(width/7, width/7);
+    leaderboard.setPosition(width - leaderboard.getWidth(), height - leaderboard.getHeight() * 2f);
+    leaderboard.addListener(new ClickListener() {
+			@Override
+	    public void clicked(InputEvent event, float x, float y) {
+		    AcidCat.googleServices.gameHelperOnStart();
+				AcidCat.googleServices.showScores();
+			}
+    });
+    stage.addActor(leaderboard);
+
     // rate
     rate = new TextureActor(new TextureRegion(
         AcidCat.manager.get(Assets.txrRate, Texture.class)));
-    rate.setSize(width/6, width/6);
-    rate.setPosition(width - rate.getWidth(), height - rate.getHeight() * 4.5f);
+    rate.setSize(width/7, width/7);
+    rate.setPosition(width - rate.getWidth(), height - rate.getHeight() * 3f);
     rate.addListener(new ClickListener() {
       @Override
       public void clicked(InputEvent event, float x, float y) {
@@ -116,8 +116,8 @@ public class MenuScreen extends ScreenAdapter {
 
     // settings
     settBtn = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrSettings, Texture.class)));
-    settBtn.setSize(width/6, width/6);
-    settBtn.setPosition(width - settBtn.getWidth(), height - settBtn.getHeight() * 3.5f);
+    settBtn.setSize(width/7, width/7);
+    settBtn.setPosition(width - settBtn.getWidth(), height - settBtn.getHeight() * 4f);
     settBtn.addListener(new ClickListener() {
 			@Override
 	    public void clicked(InputEvent event, float x, float y) {
@@ -126,7 +126,7 @@ public class MenuScreen extends ScreenAdapter {
 			}
     });
     stage.addActor(settBtn);
-        
+
 		// UNCOMMENT when create new packs
        // menuCat = new Rectangle(Gdx.graphics.getWidth()-Gdx.graphics.getWidth()/6, 100, Gdx.graphics.getWidth()/6, Gdx.graphics.getWidth()/6);
     settings = new Group();
@@ -221,8 +221,8 @@ public class MenuScreen extends ScreenAdapter {
 		
 		  if (getBonus) {
 			  bonusBatch.begin();
-			  bonusBatch.draw(new TextureRegion(AcidCat.manager.get(Assets.bonusBg, Texture.class)), 0, 0, width, height);
-			  bonusBatch.draw(new TextureRegion(AcidCat.manager.get(Assets.bonusImg, Texture.class)), 20, (height - (width + 60))/2, width - 40, width + 60);
+			  bonusBatch.draw(new TextureRegion(AcidCat.manager.get(Assets.txrBonusBg, Texture.class)), 0, 0, width, height);
+			  bonusBatch.draw(new TextureRegion(AcidCat.manager.get(Assets.txrBonusImg, Texture.class)), 20, (height - (width + 60))/2, width - 40, width + 60);
 			  bonusBatch.end();
 		  }
 

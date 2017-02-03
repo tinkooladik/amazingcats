@@ -45,6 +45,7 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
   private AdColonyAdOptions ad_options;
 
   private boolean rewardedSuccess = false;
+	private boolean rewardedReady = false;
 
 	private AdView bannerAd;
 	private static final String BANNER_AD_UNIT_ID = "ca-app-pub-6529396180091306/6714389279";
@@ -111,20 +112,21 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
 		setContentView(layout);
 
 		// REWARDED
-		if(AdColony.configure(this, APP_ID, ZONE_ID)) showToast("configured");
-    else showToast("not configured");
+		AdColony.configure(this, APP_ID, ZONE_ID);
 
 		AdColony.setRewardListener(new AdColonyRewardListener() {
 			@Override public void onReward(AdColonyReward adColonyReward) {
 				if(adColonyReward.success()) {
 					// reward
+					//showToast("ON REWARDED");
           rewardedSuccess = true;
+					AdColony.requestInterstitial( ZONE_ID, adColonyListener, ad_options  );
 				}
 			}
+
 		});
 
-    ad_options = new AdColonyAdOptions()
-        .enableConfirmationDialog( true );
+    ad_options = new AdColonyAdOptions();
 
     adColonyListener = new AdColonyInterstitialListener()
     {
@@ -133,15 +135,17 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
       public void onRequestFilled( AdColonyInterstitial ad )
       {
         rewardedAd = ad;
-        showToast("rewarded was loaded");
-        rewardedAd.show();
+				rewardedReady = true;
+        //showToast("rewarded was loaded");
       }
 
       /** Ad request was not filled */
       @Override
       public void onRequestNotFilled( AdColonyZone zone )
       {
-        showToast("Ad request was not filled");
+				AdColony.requestInterstitial( ZONE_ID, this, ad_options  );
+				rewardedReady = false;
+        //showToast("Ad request was not filled");
       }
 
       /** Ad opened, reset UI to reflect state change */
@@ -154,10 +158,11 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
       @Override
       public void onExpiring( AdColonyInterstitial ad )
       {
-        showToast("expired");
+        //showToast("expired");
         AdColony.requestInterstitial( ZONE_ID, this, ad_options  );
       }
     };
+
     AdColony.requestInterstitial(ZONE_ID, adColonyListener, ad_options );
 
 	}
@@ -328,15 +333,25 @@ public class AndroidLauncher extends AndroidApplication implements IGoogleServic
       });
     }
     else {
-      showToast("rewarded is null");
+      showToast("Ads wasn't loaded");
     }
 
 	}
 
   @Override
   public boolean isRewarded() {
+		//showToast(String.valueOf(rewardedSuccess));
     return rewardedSuccess;
   }
+
+	@Override public boolean isRewardedReady() {
+		return rewardedReady && isNetworkAvailable();
+	}
+
+	@Override public void resetRewardedSuccess() {
+		rewardedSuccess = false;
+		//showToast("rewardedSuccess = false");
+	}
 
 	@Override
 	public boolean isNetworkAvailable() {

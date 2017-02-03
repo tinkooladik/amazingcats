@@ -13,7 +13,7 @@ public class Assets {
                 txrTranspBtn, txrFish, txrLife, txrLostLife, txrPause, txrPauseBack, txrPauseBg, txrHelp,
                 txrTouch, txrMusicOff, txrAudio, txrSettings, txrLeaderboard, txrAchievements, txrRate,
                 txrReplay, txrMenu, txrProgressBar, txrKnob, txrGameOver, menuTxt1, menuTxt2, menuTxt3,
-                bonusImg, bonusBg, gameBg;
+                txrBonusImg, txrBonusBg, txrGameBg, txrRewarded;
   public static Music music;
   public static Sound sound;
 
@@ -23,9 +23,9 @@ public class Assets {
 
     Gdx.app.log("myLog", "loading started");
 
-    AcidCat.manager.load("data/items.pack", TextureAtlas.class);
+    AcidCat.manager.load("data/for_pause.pack", TextureAtlas.class);
     AcidCat.manager.finishLoading();
-    atlas = AcidCat.manager.get("data/items.pack", TextureAtlas.class);
+    atlas = AcidCat.manager.get("data/for_pause.pack", TextureAtlas.class);
 
     // game items
     txrPlus5 = "data/p5.png";
@@ -57,6 +57,9 @@ public class Assets {
 
     txrTouch = "data/touch.png";
     AcidCat.manager.load(txrTouch, Texture.class);
+
+    txrRewarded = "data/rewarded.png";
+    AcidCat.manager.load(txrRewarded, Texture.class);
 
     // settings items
     txrMusicOff = "data/music_off.png";
@@ -93,8 +96,8 @@ public class Assets {
       AcidCat.manager.load("data/" + i + ".jpg", Texture.class);
     }
 
-    gameBg = "data/background.jpg";
-    AcidCat.manager.load(gameBg, Texture.class);
+    txrGameBg = "data/background.jpg";
+    AcidCat.manager.load(txrGameBg, Texture.class);
 
     // menu screen
     txrGameOver = "data/game_over_bg.jpg";
@@ -109,11 +112,11 @@ public class Assets {
     menuTxt3 = "data/menu_txt_3.png";
     AcidCat.manager.load(menuTxt3, Texture.class);
 
-    bonusImg = "data/bonus_img.png";
-    AcidCat.manager.load(bonusImg, Texture.class);
+    txrBonusImg = "data/bonus_img.png";
+    AcidCat.manager.load(txrBonusImg, Texture.class);
 
-    bonusBg = "data/bonus_bg.png";
-    AcidCat.manager.load(bonusBg, Texture.class);
+    txrBonusBg = "data/bonus_bg.png";
+    AcidCat.manager.load(txrBonusBg, Texture.class);
 
 
     // dialog textures

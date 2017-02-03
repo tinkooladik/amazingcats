@@ -23,6 +23,8 @@ public interface IGoogleServices {
 	// Rewarded
 	void showRewarded();
 	boolean isRewarded();
+	boolean isRewardedReady();
+	void resetRewardedSuccess();
 
 	// Network connection
 	boolean isNetworkAvailable();
