@@ -302,7 +302,7 @@ class GameScreen extends ScreenAdapter {
       borderTimer = 0;
     }
 
-    // UNTOUCH TIMER
+    // UNTOUCHED TIMER
     if (Gdx.input.isTouched(0)) {
       lastX = Gdx.input.getX();
       lastY = Gdx.input.getY();
