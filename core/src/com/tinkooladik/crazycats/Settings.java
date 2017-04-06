@@ -5,7 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 public class Settings {
   public final static String file = ".acidcat";
-  public static int catsPack = 1;
+  public static int catsPack = 0;
   public static int[] scores = new int[] { 0, 0, 0, 0 };
   public static boolean newMaxScore = false;
   public static boolean musicEnabled = true;

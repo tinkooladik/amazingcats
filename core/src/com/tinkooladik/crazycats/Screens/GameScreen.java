@@ -46,7 +46,7 @@ class GameScreen extends ScreenAdapter {
   private Random rand = new Random();
   private Cat cat;
   private Texture background;
-  private TextureActor pause, dialog_back, dialog_bg, dialog_btn, dialog_btnTransp, lifeLost,
+  private TextureActor pause, dialogBack, dialogBg, dialogBtn, dialogBtnTransp, lifeLost,
       borderWarning, help, pauseBg, untchActor;
   private boolean dialogExist = false, redScreen = false, borderWarningShowed = false;
   private Group dialog;
@@ -83,7 +83,6 @@ class GameScreen extends ScreenAdapter {
 
     font = new BitmapFont(Gdx.files.internal("data/font.fnt"), false);
     font.setColor(Color.BLACK);
-    //float x = 2 * (width / height); // float y = height / 1280f;
     float x = width / 720f;
     float y = height / 1280f;
     font.getData().setScale(x, y);
@@ -121,13 +120,13 @@ class GameScreen extends ScreenAdapter {
     borderWarning.setSize(width, height);
     borderWarning.setPosition(0, 0);
 
-    dialog_back = new TextureActor(
+    dialogBack = new TextureActor(
         new TextureRegion(AcidCat.manager.get(Assets.txrDialogBack, Texture.class)));
-    dialog_bg =
+    dialogBg =
         new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrDialogBg, Texture.class)));
-    dialog_btn = new TextureActor(
+    dialogBtn = new TextureActor(
         new TextureRegion(AcidCat.manager.get(Assets.txrDialogBtn, Texture.class)));
-    dialog_btnTransp = new TextureActor(
+    dialogBtnTransp = new TextureActor(
         new TextureRegion(AcidCat.manager.get(Assets.txrTranspBtn, Texture.class)));
 
     float pauseSize = width / 10;
@@ -145,8 +144,6 @@ class GameScreen extends ScreenAdapter {
     rewardedBtn = new RewardedButton(game);
 
     if (game.catsAmnt > 5) state = State.READY;
-
-    //AcidCat.myRequestHandler.showAds(false);
 
     AcidCat.rewardedAfter--;
   }
@@ -206,12 +203,12 @@ class GameScreen extends ScreenAdapter {
       case DIALOG:
         if (!dialogExist) showDialog();
 
-        // if rewarded is possible
+        /* if rewarded is possible */
         if (rewarding) {
           rewardedBtn.act(delta);
           rewardedRequest++;
 
-          // check if video finished
+          /* check if video finished */
           if (rewardedRequest == 50) {
             rewardedRequest = 0;
             if (AcidCat.googleServices.isRewarded()) {
@@ -361,17 +358,17 @@ class GameScreen extends ScreenAdapter {
       // second chance
       dialogLayout.setText(font, "Second chance?");
       x = (width - dialogLayout.width) / 2;
-      y = dialog_bg.getTop() - dialogLayout.height;
+      y = dialogBg.getTop() - dialogLayout.height;
       font.draw(dialogBatch, dialogLayout, x, y);
       // fishes amount
       y -= dialogLayout.height * 2.5f;
       dialogLayout.setText(smallFont, "You have " + Settings.scores[3] + " fishes");
-      x = dialog_bg.getX() + 50;
+      x = dialogBg.getX() + 50;
       smallFont.draw(dialogBatch, dialogLayout, x, y);
       // no thanks button
       dialogLayout.setText(font, "No, thanks");
       x = (width - dialogLayout.width) / 2;
-      y = dialog_btn.getTop() - (dialog_btn.getHeight() - dialogLayout.height) / 2;
+      y = dialogBtn.getTop() - (dialogBtn.getHeight() - dialogLayout.height) / 2;
       font.draw(dialogBatch, dialogLayout, x, y);
     }
     dialogBatch.end();
@@ -454,21 +451,21 @@ class GameScreen extends ScreenAdapter {
 
     // background
 
-    dialog_back.setPosition(0, 0);
-    dialog_back.setSize(width, height);
-    dialog.addActor(dialog_back);
+    dialogBack.setPosition(0, 0);
+    dialogBack.setSize(width, height);
+    dialog.addActor(dialogBack);
 
     float dialogSize = width / 15;
-    dialog_bg.setPosition(dialogSize, (height - width + (dialogSize) * 2) / 2);
-    dialog_bg.setSize(width - (dialogSize) * 2, width - (dialogSize) * 2);
-    dialog.addActor(dialog_bg);
+    dialogBg.setPosition(dialogSize, (height - width + (dialogSize) * 2) / 2);
+    dialogBg.setSize(width - (dialogSize) * 2, width - (dialogSize) * 2);
+    dialog.addActor(dialogBg);
 
     // button
 
-    dialog_btn.setSize(width - dialog_bg.getWidth() / 2, width / 8);
-    dialog_btn.setPosition(dialog_bg.getX() * 3, dialog_bg.getY() + dialog_btn.getHeight() / 2);
-    dialog_btn.addListener(new GOListener());
-    dialog.addActor(dialog_btn);
+    dialogBtn.setSize(width - dialogBg.getWidth() / 2, width / 8);
+    dialogBtn.setPosition(dialogBg.getX() * 3, dialogBg.getY() + dialogBtn.getHeight() / 2);
+    dialogBtn.addListener(new GOListener());
+    dialog.addActor(dialogBtn);
 
     Label.LabelStyle dialogStyle = new Label.LabelStyle();
     dialogStyle.font = font;
@@ -480,10 +477,9 @@ class GameScreen extends ScreenAdapter {
     for (int i = 0; i <= 2; i++) {
       TextureActor addButton = new TextureActor(
           new TextureRegion(AcidCat.manager.get(Assets.txrDialogBtn, Texture.class)));
-      addButton.setSize(width - (width / 12) * 2, dialog_btn.getHeight());
-      addButton.setPosition((width - addButton.getWidth()) / 2, dialog_btn.getTop()
-          + dialog_btn.getHeight() / 2
-          + dialog_btn.getHeight() / 10 * i
+      addButton.setSize(width - (width / 12) * 2, dialogBtn.getHeight());
+      addButton.setPosition((width - addButton.getWidth()) / 2,
+          dialogBtn.getTop() + dialogBtn.getHeight() / 2 + dialogBtn.getHeight() / 10 * i
           + addButton.getHeight() * i);
       dialog.addActor(addButton);
 
@@ -501,10 +497,10 @@ class GameScreen extends ScreenAdapter {
 
     // "no" button
 
-    dialog_btnTransp.setPosition(dialog_btn.getX(), dialog_btn.getY());
-    dialog_btnTransp.setSize(dialog_btn.getWidth(), dialog_btn.getHeight());
-    dialog_btnTransp.addListener(new GOListener());
-    dialog.addActor(dialog_btnTransp);
+    dialogBtnTransp.setPosition(dialogBtn.getX(), dialogBtn.getY());
+    dialogBtnTransp.setSize(dialogBtn.getWidth(), dialogBtn.getHeight());
+    dialogBtnTransp.addListener(new GOListener());
+    dialog.addActor(dialogBtnTransp);
 
     // add-life buttons
     j = 2;
@@ -524,7 +520,7 @@ class GameScreen extends ScreenAdapter {
       //AcidCat.rewardedAfter <= 0 &&
       // add rewarded button
       rewarding = true;
-      rewardedBtn.setY(dialog_bg.getTop() - Gdx.graphics.getWidth() / 5);
+      rewardedBtn.setY(dialogBg.getTop() - Gdx.graphics.getWidth() / 5);
       stage.addActor(rewardedBtn);
     }
 
@@ -535,10 +531,9 @@ class GameScreen extends ScreenAdapter {
     final int addLives = j + 1;
     TextureActor addButton = new TextureActor(
         new TextureRegion(AcidCat.manager.get(Assets.txrTranspBtn, Texture.class)));
-    addButton.setSize(width - (width / 12) * 2, dialog_btn.getHeight());
-    addButton.setPosition((width - addButton.getWidth()) / 2, dialog_btn.getTop()
-        + dialog_btn.getHeight() / 2
-        + dialog_btn.getHeight() / 10 * i
+    addButton.setSize(width - (width / 12) * 2, dialogBtn.getHeight());
+    addButton.setPosition((width - addButton.getWidth()) / 2,
+        dialogBtn.getTop() + dialogBtn.getHeight() / 2 + dialogBtn.getHeight() / 10 * i
         + addButton.getHeight() * i);
     addButton.addListener(new ClickListener() {
       @Override public void clicked(InputEvent event, float x, float y) {
@@ -567,10 +562,9 @@ class GameScreen extends ScreenAdapter {
   private void passiveButton(int i) {
     TextureActor addButton = new TextureActor(
         new TextureRegion(AcidCat.manager.get(Assets.txrDialogBtnPassive, Texture.class)));
-    addButton.setSize(width - (width / 12) * 2, dialog_btn.getHeight());
-    addButton.setPosition((width - addButton.getWidth()) / 2, dialog_btn.getTop()
-        + dialog_btn.getHeight() / 2
-        + dialog_btn.getHeight() / 10 * i
+    addButton.setSize(width - (width / 12) * 2, dialogBtn.getHeight());
+    addButton.setPosition((width - addButton.getWidth()) / 2,
+        dialogBtn.getTop() + dialogBtn.getHeight() / 2 + dialogBtn.getHeight() / 10 * i
         + addButton.getHeight() * i);
     dialog.addActor(addButton);
   }
@@ -579,10 +573,9 @@ class GameScreen extends ScreenAdapter {
     for (int k = 0; k <= j + 1; k++) {
       TextureActor addPic =
           new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrLife, Texture.class)));
-      addPic.setSize(dialog_btn.getHeight(), dialog_btn.getHeight());
-      addPic.setPosition(dialog_bg.getX() * 2 + addPic.getWidth() * k, dialog_btn.getTop()
-          + dialog_btn.getHeight() / 2
-          + dialog_btn.getHeight() / 10 * i
+      addPic.setSize(dialogBtn.getHeight(), dialogBtn.getHeight());
+      addPic.setPosition(dialogBg.getX() * 2 + addPic.getWidth() * k,
+          dialogBtn.getTop() + dialogBtn.getHeight() / 2 + dialogBtn.getHeight() / 10 * i
           + addPic.getHeight() * i);
       dialog.addActor(addPic);
     }

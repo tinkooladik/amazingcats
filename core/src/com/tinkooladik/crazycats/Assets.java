@@ -138,6 +138,10 @@ public class Assets {
     for (int i = 1; i <= 13; i++) {
       AcidCat.manager.load("data/alive/cat" + i + ".png", Texture.class);
     }
+    // cats1
+    for (int i = 1; i <= 13; i++) {
+      AcidCat.manager.load("data/cats1/cat" + i + ".png", Texture.class);
+    }
 
     AcidCat.manager.finishLoading();
   }
@@ -153,6 +157,18 @@ public class Assets {
   }
 
   public static TextureRegion getCat(int i) {
-    return new TextureRegion(AcidCat.manager.get("data/alive/cat" + i + ".png", Texture.class));
+    TextureRegion cats = null;
+    switch (Settings.catsPack) {
+      case 0:
+        cats = new TextureRegion(AcidCat.manager.get("data/cats1/cat" + i + ".png", Texture.class));
+        break;
+      case 1:
+        cats = new TextureRegion(AcidCat.manager.get("data/alive/cat" + i + ".png", Texture.class));
+        break;
+      default:
+        cats = new TextureRegion(AcidCat.manager.get("data/cats1/cat" + i + ".png", Texture.class));
+        break;
+    }
+    return cats;
   }
 }
