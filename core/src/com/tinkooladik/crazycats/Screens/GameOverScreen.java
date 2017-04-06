@@ -123,7 +123,7 @@ public class GameOverScreen extends ScreenAdapter {
 
 	    // ads
 
-		if(AcidCat.interstitialCount >= 3) {
+		if(AcidCat.interstitialCount >= 5) {
 			AcidCat.googleServices.showInterstitial(new Runnable() {
 				@Override
 				public void run() {
@@ -136,7 +136,7 @@ public class GameOverScreen extends ScreenAdapter {
 		else AcidCat.interstitialCount++;
 
 		if (AcidCat.googleServices.isNetworkAvailable()) {
-			AcidCat.googleServices.showBannerAd();
+			//AcidCat.googleServices.showBannerAd();
 		}
 
 		// Progress bar

@@ -19,13 +19,12 @@ public class RewardedButton extends Actor {
   private float size, maxSize, minSize;
   private boolean increase = true;
 
-  public RewardedButton(AcidCat game, float dialogTop) {
+  public RewardedButton(AcidCat game) {
     this.game = game;
     size = Gdx.graphics.getWidth()/5;
     setSize(size, size);
     float x = Gdx.graphics.getWidth() - size * 1.2f;
-    float y = dialogTop - size;
-    setPosition(x, y);
+    setX(x);
     addListener(new EnterBtnListener());
     maxSize = size * 1.05f;
     minSize = size * 0.95f;

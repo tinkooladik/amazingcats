@@ -142,6 +142,8 @@ class GameScreen extends ScreenAdapter {
 		untchActor = new TextureActor(new TextureRegion(AcidCat.manager.get(Assets.txrTouch, Texture.class)));
 		untchActor.setSize(pauseSize * 2f, pauseSize * 2f);
 
+		rewardedBtn = new RewardedButton(game);
+
 		if (game.catsAmnt > 5) state = State.READY;
 
 		//AcidCat.myRequestHandler.showAds(false);
@@ -506,11 +508,11 @@ class GameScreen extends ScreenAdapter {
 		
 		stage.addActor(dialog);
 
-		if( AcidCat.googleServices.isRewardedReady()) {
+		if(AcidCat.rewardedAfter <= 0 && AcidCat.googleServices.isRewardedReady()) {
 			//AcidCat.rewardedAfter <= 0 &&
 			// add rewarded button
 			rewarding = true;
-			rewardedBtn = new RewardedButton(game, dialog_bg.getTop());
+			rewardedBtn.setY(dialog_bg.getTop() - Gdx.graphics.getWidth()/5);
 			stage.addActor(rewardedBtn);
 		}
 
