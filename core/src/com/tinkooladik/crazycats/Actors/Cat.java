@@ -4,17 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.tinkooladik.crazycats.AcidCat;
 import java.util.Random;
 
 public class Cat extends Actor {
   private TextureRegion toDraw;
   private int pace;
   private int steps, paceX, paceY;
+  private int size, minSize, startSize;
 
   public Cat(TextureRegion toDraw, int pace) {
     this.toDraw = toDraw;
     this.pace = pace;
-    setSize(Gdx.graphics.getWidth() / 5, Gdx.graphics.getWidth() / 5);
+    size = startSize = Gdx.graphics.getWidth() / 5;
+    minSize = Gdx.graphics.getWidth() / 10;
+    setSize(startSize, startSize);
     setPosition(100, 100);
     steps = pace;
   }
@@ -25,6 +29,7 @@ public class Cat extends Actor {
   }
 
   @Override public void act(float delta) {
+    /* cat's moving */
     Random rand = new Random();
     if (pace == steps) {
       paceX = rand.nextInt(4);
@@ -48,6 +53,11 @@ public class Cat extends Actor {
     }
     if (steps == 0) {
       steps = pace;
+    }
+    /* changing cat's size */
+    if(size > minSize) {
+      size = startSize - AcidCat.score / 25;
+      this.setSize(size, size);
     }
   }
 }

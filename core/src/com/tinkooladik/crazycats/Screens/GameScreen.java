@@ -284,8 +284,10 @@ class GameScreen extends ScreenAdapter {
     }
 
     // BORDERS
-    boolean border =
-        Gdx.input.getX() <= 10 || Gdx.input.getX() >= width - 10 || Gdx.input.getY() >= height - 10;
+    boolean border = Gdx.input.getX() <= 10
+        || Gdx.input.getX() >= width - 10
+        || Gdx.input.getY() >= height - 10
+        || Gdx.input.getY() <= 10;
     boolean leftCorner = Gdx.input.getX() <= 50 && Gdx.input.getY() >= height - 50;
     boolean rightCorner = Gdx.input.getX() >= width - 50 && Gdx.input.getY() >= height - 50;
     if (border || leftCorner || rightCorner) {
