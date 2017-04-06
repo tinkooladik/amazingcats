@@ -9,11 +9,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Assets {
 
-  public static String txrPlus5, txrPlusLife, txrDialogBack, txrDialogBg, txrDialogBtn, txrDialogBtnPassive,
-                txrTranspBtn, txrFish, txrLife, txrLostLife, txrPause, txrPauseBack, txrPauseBg, txrHelp,
-                txrTouch, txrMusicOff, txrAudio, txrSettings, txrLeaderboard, txrAchievements, txrRate,
-                txrReplay, txrMenu, txrProgressBar, txrKnob, txrGameOver, menuTxt1, menuTxt2, menuTxt3,
-                txrBonusImg, txrBonusBg, txrGameBg, txrRewarded;
+  public static String txrPlus5, txrPlusLife, txrDialogBack, txrDialogBg, txrDialogBtn,
+      txrDialogBtnPassive, txrTranspBtn, txrFish, txrLife, txrLostLife, txrPause, txrPauseBack,
+      txrPauseBg, txrHelp, txrTouch, txrMusicOff, txrAudio, txrSettings, txrLeaderboard,
+      txrAchievements, txrRate, txrReplay, txrMenu, txrProgressBar, txrKnob, txrGameOver, menuTxt1,
+      menuTxt2, menuTxt3, txrBonusImg, txrBonusBg, txrGameBg, txrRewarded;
   public static Music music;
   public static Sound sound;
 
@@ -92,7 +92,7 @@ public class Assets {
     txrKnob = "data/knob.png";
     AcidCat.manager.load(txrKnob, Texture.class);
 
-    for(int i = 1; i <= 8; i++) {
+    for (int i = 1; i <= 8; i++) {
       AcidCat.manager.load("data/" + i + ".jpg", Texture.class);
     }
 
@@ -118,7 +118,6 @@ public class Assets {
     txrBonusBg = "data/bonus_bg.png";
     AcidCat.manager.load(txrBonusBg, Texture.class);
 
-
     // dialog textures
     txrDialogBack = "data/dialog_back.png";
     AcidCat.manager.load(txrDialogBack, Texture.class);
@@ -136,12 +135,11 @@ public class Assets {
     AcidCat.manager.load(txrTranspBtn, Texture.class);
 
     // alive cats
-    for(int i = 1; i <= 13; i++) {
+    for (int i = 1; i <= 13; i++) {
       AcidCat.manager.load("data/alive/cat" + i + ".png", Texture.class);
     }
 
     AcidCat.manager.finishLoading();
-
   }
 
   public static void loadMusic() {
@@ -157,5 +155,4 @@ public class Assets {
   public static TextureRegion getCat(int i) {
     return new TextureRegion(AcidCat.manager.get("data/alive/cat" + i + ".png", Texture.class));
   }
-
 }

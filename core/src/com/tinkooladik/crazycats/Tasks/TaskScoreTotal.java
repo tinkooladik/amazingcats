@@ -5,23 +5,20 @@ import com.tinkooladik.crazycats.Settings;
 
 /**
  * Created by Oladik on 09.11.2016.
- *
  */
 
 class TaskScoreTotal extends Task {
 
-	TaskScoreTotal(int target) {
-		this.target = target;
-		description = ("Score a total of " + target + " \npoints");
-	}
+  TaskScoreTotal(int target) {
+    this.target = target;
+    description = ("Score a total of " + target + " \npoints");
+  }
 
-	public void update() {
-		Settings.taskProgress += AcidCat.score;
-	}
+  public void update() {
+    Settings.taskProgress += AcidCat.score;
+  }
 
-	@Override
-	public boolean isCompleted() {
-		return Settings.taskProgress >= target;
-	}
-
+  @Override public boolean isCompleted() {
+    return Settings.taskProgress >= target;
+  }
 }

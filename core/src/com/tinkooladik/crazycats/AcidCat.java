@@ -11,14 +11,14 @@ import gpservices.IGoogleServices;
 public class AcidCat extends Game {
   public static TaskFactory taskFactory = new TaskFactory();
   public static Task task;
-  public int catsAmnt;
-  public int lives;
   public static int score, fishScore;
   public static IGoogleServices googleServices;
-  public boolean p5 = false;
   public static int interstitialCount = 0;
   public static AssetManager manager;
   public static int rewardedAfter = 10;
+  public int catsAmnt;
+  public int lives;
+  public boolean p5 = false;
 
   public AcidCat(IGoogleServices googleServices) {
     super();

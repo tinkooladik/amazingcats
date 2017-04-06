@@ -5,24 +5,20 @@ import com.tinkooladik.crazycats.Settings;
 
 /**
  * Created by Oladik on 09.11.2016.
- *
  */
 
 class TaskGamesWithFishes extends Task {
 
-	TaskGamesWithFishes(int target) {
-		this.target = target;
-		description = "Play 3 games with more\n     then " + target + " fishes";
-	}
+  TaskGamesWithFishes(int target) {
+    this.target = target;
+    description = "Play 3 games with more\n     then " + target + " fishes";
+  }
 
-	public void update() {
-		if (AcidCat.fishScore > target)
-			Settings.taskProgress++;
-	}
+  public void update() {
+    if (AcidCat.fishScore > target) Settings.taskProgress++;
+  }
 
-	@Override
-	public boolean isCompleted() {
-		return (Settings.taskProgress >= 3);
-	}
-
+  @Override public boolean isCompleted() {
+    return (Settings.taskProgress >= 3);
+  }
 }

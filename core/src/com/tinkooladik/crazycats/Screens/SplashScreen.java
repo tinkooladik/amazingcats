@@ -42,8 +42,9 @@ public class SplashScreen implements Screen {
       Assets.loadMusic();
     }
 
-    if (AcidCat.manager.update() && TimeUtils.timeSinceMillis(endTime) >= 2000) game.setScreen(new MenuScreen(game));
-
+    if (AcidCat.manager.update() && TimeUtils.timeSinceMillis(endTime) >= 2000) {
+      game.setScreen(new MenuScreen(game));
+    }
 
     Gdx.app.log("myLog", "Progress: " + String.valueOf(AcidCat.manager.getProgress()));
   }

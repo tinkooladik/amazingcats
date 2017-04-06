@@ -21,7 +21,7 @@ public class RewardedButton extends Actor {
 
   public RewardedButton(AcidCat game) {
     this.game = game;
-    size = Gdx.graphics.getWidth()/5;
+    size = Gdx.graphics.getWidth() / 5;
     setSize(size, size);
     float x = Gdx.graphics.getWidth() - size * 1.2f;
     setX(x);
@@ -30,36 +30,34 @@ public class RewardedButton extends Actor {
     minSize = size * 0.95f;
   }
 
-  @Override
-  public void draw(Batch batch, float parentAlpha) {
+  @Override public void draw(Batch batch, float parentAlpha) {
     batch.setColor(getColor());
-    batch.draw(AcidCat.manager.get(Assets.txrRewarded, Texture.class), getX(), getY(), getWidth(), getHeight());
+    batch.draw(AcidCat.manager.get(Assets.txrRewarded, Texture.class), getX(), getY(), getWidth(),
+        getHeight());
   }
 
-  @Override
-  public void act(float delta) {
-    if(increase) {
-      if(size < maxSize) {
+  @Override public void act(float delta) {
+    if (increase) {
+      if (size < maxSize) {
         size++;
         setSize(size, size);
+      } else {
+        increase = false;
       }
-      else increase = false;
-    }
-    else {
-      if(size > minSize) {
+    } else {
+      if (size > minSize) {
         size--;
         setSize(size, size);
+      } else {
+        increase = true;
       }
-      else increase = true;
     }
   }
 
   private class EnterBtnListener extends ClickListener {
-    @Override
-    public void clicked(InputEvent event, float x, float y) {
+    @Override public void clicked(InputEvent event, float x, float y) {
       AcidCat.rewardedAfter = 10;
       AcidCat.googleServices.showRewarded();
     }
   }
-
 }

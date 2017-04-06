@@ -42,5 +42,4 @@ public class Achievements {
     AcidCat.googleServices.updateAchievements("CgkI_-Dr0fwXEAIQFA", 1); // 500
     AcidCat.googleServices.updateAchievements("CgkI_-Dr0fwXEAIQFQ", 1); // 1000
   }
-
 }

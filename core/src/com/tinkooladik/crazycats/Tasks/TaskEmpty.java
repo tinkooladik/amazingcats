@@ -6,17 +6,15 @@ package com.tinkooladik.crazycats.Tasks;
 
 public class TaskEmpty extends Task {
 
-	TaskEmpty() {
-		description = ("You've completed all the tasks");
-	}
+  TaskEmpty() {
+    description = ("You've completed all the tasks");
+  }
 
-	public void update() {
+  public void update() {
 
-	}
+  }
 
-	@Override
-	public boolean isCompleted() {
-		return false;
-	}
-
+  @Override public boolean isCompleted() {
+    return false;
+  }
 }

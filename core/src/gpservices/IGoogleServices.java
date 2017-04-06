@@ -2,34 +2,45 @@ package gpservices;
 
 public interface IGoogleServices {
 
-	void signIn();
-	void signOut();
-	void rateGame();
-	void submitScore(long score);
-	void showScores();
-	void updateAchievements(String achievement, int points);
+  void signIn();
+
+  void signOut();
+
+  void rateGame();
+
+  void submitScore(long score);
+
+  void showScores();
+
+  void updateAchievements(String achievement, int points);
+
   void showAchievements();
-	boolean isSignedIn();
-	void gameHelperOnStart();
-	
-	// IActionResolver Interstitial
-	void showInterstitial(Runnable then);
 
-	// Banner
+  boolean isSignedIn();
 
-	void showBannerAd();
-	void hideBannerAd();
+  void gameHelperOnStart();
 
-	// Rewarded
-	void showRewarded();
-	boolean isRewarded();
-	boolean isRewardedReady();
-	void resetRewardedSuccess();
+  // IActionResolver Interstitial
+  void showInterstitial(Runnable then);
 
-	// Network connection
-	boolean isNetworkAvailable();
+  // Banner
 
-	// For toast
-	void showToast(String text);
+  void showBannerAd();
 
+  void hideBannerAd();
+
+  // Rewarded
+  void showRewarded();
+
+  boolean isRewarded();
+
+  boolean isRewardedReady();
+
+  void resetRewardedSuccess();
+
+  // Network connection
+  boolean isNetworkAvailable();
+
+  // For toast
+  void showToast(String text);
 }
