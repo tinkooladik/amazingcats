@@ -284,12 +284,12 @@ class GameScreen extends ScreenAdapter {
     }
 
     // BORDERS
-    boolean border = Gdx.input.getX() <= 20
-        || Gdx.input.getX() >= width - 20
-        || Gdx.input.getY() >= height - 20
-        || Gdx.input.getY() <= 20;
-    boolean leftCorner = Gdx.input.getX() <= 70 && Gdx.input.getY() >= height - 70;
-    boolean rightCorner = Gdx.input.getX() >= width - 50 && Gdx.input.getY() >= height - 70;
+    boolean border = Gdx.input.getX() <= 25
+        || Gdx.input.getX() >= width - 25
+        || Gdx.input.getY() >= height - 25
+        || Gdx.input.getY() <= 25;
+    boolean leftCorner = Gdx.input.getX() <= 75 && Gdx.input.getY() >= height - 75;
+    boolean rightCorner = Gdx.input.getX() >= width - 75 && Gdx.input.getY() >= height - 75;
     if (border || leftCorner || rightCorner) {
       if (!borderWarningShowed) {
         stage.addActor(borderWarning);
