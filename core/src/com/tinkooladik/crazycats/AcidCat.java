@@ -44,11 +44,12 @@ public class AcidCat extends Game {
   }
 
   public void loadAssets() {
-    Gdx.app.log("myLog", "loading method in app");
+    Gdx.app.log("myLog", "load assets");
     Assets.load();
+    Assets.loadMusic();
   }
 
-  @Override public void render() {
+  public void render() {
     super.render();
   }
 }

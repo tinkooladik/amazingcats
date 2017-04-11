@@ -146,8 +146,6 @@ class GameScreen extends ScreenAdapter {
     if (game.catsAmnt > 5) state = State.READY;
 
     AcidCat.rewardedAfter--;
-
-    Settings.scores[3] += 200;
   }
 
   @Override public void render(float delta) {
