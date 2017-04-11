@@ -146,6 +146,8 @@ class GameScreen extends ScreenAdapter {
     if (game.catsAmnt > 5) state = State.READY;
 
     AcidCat.rewardedAfter--;
+
+    Settings.scores[3] += 200;
   }
 
   @Override public void render(float delta) {
@@ -215,6 +217,7 @@ class GameScreen extends ScreenAdapter {
               AcidCat.googleServices.resetRewardedSuccess();
               game.lives += 3;
               untchActor.remove();
+
               dialog.remove();
               rewardedBtn.remove();
               state = State.READY;
@@ -281,12 +284,12 @@ class GameScreen extends ScreenAdapter {
     }
 
     // BORDERS
-    boolean border = Gdx.input.getX() <= 10
-        || Gdx.input.getX() >= width - 10
-        || Gdx.input.getY() >= height - 10
-        || Gdx.input.getY() <= 10;
-    boolean leftCorner = Gdx.input.getX() <= 50 && Gdx.input.getY() >= height - 50;
-    boolean rightCorner = Gdx.input.getX() >= width - 50 && Gdx.input.getY() >= height - 50;
+    boolean border = Gdx.input.getX() <= 20
+        || Gdx.input.getX() >= width - 20
+        || Gdx.input.getY() >= height - 20
+        || Gdx.input.getY() <= 20;
+    boolean leftCorner = Gdx.input.getX() <= 70 && Gdx.input.getY() >= height - 70;
+    boolean rightCorner = Gdx.input.getX() >= width - 50 && Gdx.input.getY() >= height - 70;
     if (border || leftCorner || rightCorner) {
       if (!borderWarningShowed) {
         stage.addActor(borderWarning);
@@ -409,6 +412,7 @@ class GameScreen extends ScreenAdapter {
     game.lives = 3;
     state = State.READY;
     game.setScreen(new GameOverScreen(game));
+    dispose();
   }
 
   private void showPause() {
@@ -551,6 +555,8 @@ class GameScreen extends ScreenAdapter {
         }
         untchActor.remove();
         dialog.remove();
+        borderWarning.remove();
+        borderTimer = 0;
         rewardedBtn.remove();
         state = State.READY;
         dialogExist = false;
@@ -619,7 +625,6 @@ class GameScreen extends ScreenAdapter {
   }
 
   @Override public void dispose() {
-    super.dispose();
     stage.dispose();
 
     renBatch.dispose();
@@ -628,6 +633,7 @@ class GameScreen extends ScreenAdapter {
     font.dispose();
     smallFont.dispose();
     bigFont.dispose();
+    super.dispose();
   }
 
   private enum State {

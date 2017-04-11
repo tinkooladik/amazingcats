@@ -123,7 +123,7 @@ public class GameOverScreen extends ScreenAdapter {
 		}
 
 		if (AcidCat.googleServices.isNetworkAvailable()) {
-			//AcidCat.googleServices.showBannerAd();
+			AcidCat.googleServices.showBannerAd();
 		}
 
 		// Progress bar
