@@ -5,9 +5,9 @@ An arcade android game based on LibGDX.
 
 
 ## This project uses:
-* [LibGDX] (https://libgdx.badlogicgames.com/)
-* [Google Play Services] (https://developers.google.com/android/guides/overview)
-* [AdMob] (https://www.google.com/admob/)
-* [Firebase] (https://firebase.google.com/docs/)
+* [LibGDX](https://libgdx.badlogicgames.com/)
+* [Google Play Services](https://developers.google.com/android/guides/overview)
+* [AdMob](https://www.google.com/admob/)
+* [Firebase](https://firebase.google.com/docs/)
 
 [<img src="http://pocketscientists.com/wp-content/uploads/2012/10/google-play-logo_small1.png">](https://play.google.com/store/apps/details?id=com.tinkooladik.acidcat.android)
